@@ -1,0 +1,310 @@
+[
+  {
+    "uuid": "RINCON_38420B885C7001400",
+    "coordinator": {
+      "uuid": "RINCON_38420B885C7001400",
+      "state": {
+        "volume": 38,
+        "mute": false,
+        "equalizer": { "bass": 0, "treble": 0, "loudness": false },
+        "currentTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "", "trackUri": "", "type": "track", "stationName": "" },
+        "nextTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "" },
+        "trackNo": 0,
+        "elapsedTime": 0,
+        "elapsedTimeFormatted": "00:00:00",
+        "playbackState": "STOPPED",
+        "playMode": { "repeat": "none", "shuffle": false, "crossfade": false }
+      },
+      "roomName": "OA-Gym",
+      "coordinator": "RINCON_38420B885C7001400",
+      "groupState": { "volume": 38, "mute": false }
+    },
+    "members": [
+      {
+        "uuid": "RINCON_38420B885C7001400",
+        "state": {
+          "volume": 38,
+          "mute": false,
+          "equalizer": { "bass": 0, "treble": 0, "loudness": false },
+          "currentTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "", "trackUri": "", "type": "track", "stationName": "" },
+          "nextTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "" },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": { "repeat": "none", "shuffle": false, "crossfade": false }
+        },
+        "roomName": "OA-Gym",
+        "coordinator": "RINCON_38420B885C7001400",
+        "groupState": { "volume": 38, "mute": false }
+      },
+      {
+        "uuid": "RINCON_38420B885C7001400",
+        "state": {
+          "volume": 38,
+          "mute": false,
+          "equalizer": { "bass": 0, "treble": 0, "loudness": false },
+          "currentTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "", "trackUri": "", "type": "track", "stationName": "" },
+          "nextTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "" },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": { "repeat": "none", "shuffle": false, "crossfade": false }
+        },
+        "roomName": "OB-Gym",
+        "coordinator": "RINCON_38420B885C7001400",
+        "groupState": { "volume": 38, "mute": false }
+      },
+      {
+        "uuid": "RINCON_38420B885C7001400",
+        "state": {
+          "volume": 38,
+          "mute": false,
+          "equalizer": { "bass": 0, "treble": 0, "loudness": false },
+          "currentTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "", "trackUri": "", "type": "track", "stationName": "" },
+          "nextTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "" },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": { "repeat": "none", "shuffle": false, "crossfade": false }
+        },
+        "roomName": "OC-Gym",
+        "coordinator": "RINCON_38420B885C7001400",
+        "groupState": { "volume": 48, "mute": false }
+      },
+      {
+        "uuid": "RINCON_38420B885C7001400",
+        "state": {
+          "volume": 38,
+          "mute": false,
+          "equalizer": { "bass": 0, "treble": 0, "loudness": false },
+          "currentTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "", "trackUri": "", "type": "track", "stationName": "" },
+          "nextTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "" },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": { "repeat": "none", "shuffle": false, "crossfade": false }
+        },
+        "roomName": "OD-Gym",
+        "coordinator": "RINCON_38420B885C7001400",
+        "groupState": { "volume": 38, "mute": false }
+      },
+      {
+        "uuid": "RINCON_38420B885C7001400",
+        "state": {
+          "volume": 38,
+          "mute": false,
+          "equalizer": { "bass": 0, "treble": 0, "loudness": false },
+          "currentTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "", "trackUri": "", "type": "track", "stationName": "" },
+          "nextTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "" },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": { "repeat": "none", "shuffle": false, "crossfade": false }
+        },
+        "roomName": "OE-Gym",
+        "coordinator": "RINCON_38420B885C7001400",
+        "groupState": { "volume": 38, "mute": false }
+      },
+      {
+        "uuid": "RINCON_38420B885C7001400",
+        "state": {
+          "volume": 38,
+          "mute": false,
+          "equalizer": { "bass": 0, "treble": 0, "loudness": false },
+          "currentTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "", "trackUri": "", "type": "track", "stationName": "" },
+          "nextTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "" },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": { "repeat": "none", "shuffle": false, "crossfade": false }
+        },
+        "roomName": "OF-Gym",
+        "coordinator": "RINCON_38420B885C7001400",
+        "groupState": { "volume": 38, "mute": false }
+      },
+      {
+        "uuid": "RINCON_38420B885C7001400",
+        "state": {
+          "volume": 38,
+          "mute": false,
+          "equalizer": { "bass": 0, "treble": 0, "loudness": false },
+          "currentTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "", "trackUri": "", "type": "track", "stationName": "" },
+          "nextTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "" },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": { "repeat": "none", "shuffle": false, "crossfade": false }
+        },
+        "roomName": "OG-Gym",
+        "coordinator": "RINCON_38420B885C7001400",
+        "groupState": { "volume": 38, "mute": false }
+      },
+      {
+        "uuid": "RINCON_38420B885C7001400",
+        "state": {
+          "volume": 38,
+          "mute": false,
+          "equalizer": { "bass": 0, "treble": 0, "loudness": false },
+          "currentTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "", "trackUri": "", "type": "track", "stationName": "" },
+          "nextTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "" },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": { "repeat": "none", "shuffle": false, "crossfade": false }
+        },
+        "roomName": "OH-Gym",
+        "coordinator": "RINCON_38420B885C7001400",
+        "groupState": { "volume": 38, "mute": false }
+      },
+      {
+        "uuid": "RINCON_38420B885C7001400",
+        "state": {
+          "volume": 38,
+          "mute": false,
+          "equalizer": { "bass": 0, "treble": 0, "loudness": false },
+          "currentTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "", "trackUri": "", "type": "track", "stationName": "" },
+          "nextTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "" },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": { "repeat": "none", "shuffle": false, "crossfade": false }
+        },
+        "roomName": "OI-Gym",
+        "coordinator": "RINCON_38420B885C7001400",
+        "groupState": { "volume": 38, "mute": false }
+      }
+    ]
+  },
+  {
+    "uuid": "RINCON_38420B885C7001400",
+    "coordinator": {
+      "uuid": "RINCON_38420B885C7001400",
+      "state": {
+        "volume": 38,
+        "mute": false,
+        "equalizer": { "bass": 0, "treble": 0, "loudness": false },
+        "currentTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "", "trackUri": "", "type": "track", "stationName": "" },
+        "nextTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "" },
+        "trackNo": 0,
+        "elapsedTime": 0,
+        "elapsedTimeFormatted": "00:00:00",
+        "playbackState": "STOPPED",
+        "playMode": { "repeat": "none", "shuffle": false, "crossfade": false }
+      },
+      "roomName": "OA-GAMEROOM",
+      "coordinator": "RINCON_38420B885C7001400",
+      "groupState": { "volume": 38, "mute": false }
+    },
+    "members": [
+      {
+        "uuid": "RINCON_38420B885C7001400",
+        "state": {
+          "volume": 38,
+          "mute": false,
+          "equalizer": { "bass": 0, "treble": 0, "loudness": false },
+          "currentTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "", "trackUri": "", "type": "track", "stationName": "" },
+          "nextTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "" },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": { "repeat": "none", "shuffle": false, "crossfade": false }
+        },
+        "roomName": "OA-GAMEROOM",
+        "coordinator": "RINCON_38420B885C7001400",
+        "groupState": { "volume": 38, "mute": false }
+      }
+    ]
+  },
+  {
+    "uuid": "RINCON_38420B885C7001400",
+    "coordinator": {
+      "uuid": "RINCON_38420B885C7001400",
+      "state": {
+        "volume": 38,
+        "mute": false,
+        "equalizer": { "bass": 0, "treble": 0, "loudness": false },
+        "currentTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "", "trackUri": "", "type": "track", "stationName": "" },
+        "nextTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "" },
+        "trackNo": 0,
+        "elapsedTime": 0,
+        "elapsedTimeFormatted": "00:00:00",
+        "playbackState": "STOPPED",
+        "playMode": { "repeat": "none", "shuffle": false, "crossfade": false }
+      },
+      "roomName": "2D-Room",
+      "coordinator": "RINCON_38420B885C7001400",
+      "groupState": { "volume": 38, "mute": false }
+    },
+    "members": [
+      {
+        "uuid": "RINCON_38420B885C7001400",
+        "state": {
+          "volume": 38,
+          "mute": false,
+          "equalizer": { "bass": 0, "treble": 0, "loudness": false },
+          "currentTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "", "trackUri": "", "type": "track", "stationName": "" },
+          "nextTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "" },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": { "repeat": "none", "shuffle": false, "crossfade": false }
+        },
+        "roomName": "2D-Room",
+        "coordinator": "RINCON_38420B885C7001400",
+        "groupState": { "volume": 38, "mute": false }
+      }
+    ]
+  },
+  {
+    "uuid": "RINCON_38420B885C7001400",
+    "coordinator": {
+      "uuid": "RINCON_38420B885C7001400",
+      "state": {
+        "volume": 38,
+        "mute": false,
+        "equalizer": { "bass": 0, "treble": 0, "loudness": false },
+        "currentTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "", "trackUri": "", "type": "track", "stationName": "" },
+        "nextTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "" },
+        "trackNo": 0,
+        "elapsedTime": 0,
+        "elapsedTimeFormatted": "00:00:00",
+        "playbackState": "STOPPED",
+        "playMode": { "repeat": "none", "shuffle": false, "crossfade": false }
+      },
+      "roomName": "4F-Room",
+      "coordinator": "RINCON_38420B885C7001400",
+      "groupState": { "volume": 38, "mute": false }
+    },
+    "members": [
+      {
+        "uuid": "RINCON_38420B885C7001400",
+        "state": {
+          "volume": 38,
+          "mute": false,
+          "equalizer": { "bass": 0, "treble": 0, "loudness": false },
+          "currentTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "", "trackUri": "", "type": "track", "stationName": "" },
+          "nextTrack": { "artist": "", "title": "", "album": "", "albumArtUri": "", "duration": 0, "uri": "" },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": { "repeat": "none", "shuffle": false, "crossfade": false }
+        },
+        "roomName": "4F-Room",
+        "coordinator": "RINCON_38420B885C7001400",
+        "groupState": { "volume": 38, "mute": false }
+      }
+    ]
+  }
+]

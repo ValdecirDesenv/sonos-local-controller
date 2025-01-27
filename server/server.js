@@ -1,117 +1,57 @@
-const express = require('express');
-const app = express();
-const port = 3000;
-const cors = require('cors');
-const corsOptions = {
-  origin: 'http://localhost:5173',
-};
-app.use(cors(corsOptions));
+'use strict';
 
-app.get('/api', (req, res) => {
-  res.json({
-    0: {
-      uuid: 'RINCON_38420B885C7001400',
-      coordinator: {
-        uuid: 'RINCON_38420B885C7001400',
-        state: {
-          volume: 38,
-          mute: false,
-          equalizer: { bass: 0, treble: 0, loudness: false },
-          currentTrack: { artist: '', title: '', album: '', albumArtUri: '', duration: 0, uri: '', trackUri: '', type: 'track', stationName: '' },
-          nextTrack: { artist: '', title: '', album: '', albumArtUri: '', duration: 0, uri: '' },
-          trackNo: 0,
-          elapsedTime: 0,
-          elapsedTimeFormatted: '00:00:00',
-          playbackState: 'STOPPED',
-          playMode: { repeat: 'none', shuffle: false, crossfade: false },
-        },
-        roomName: 'OA-Gym',
-        coordinator: 'RINCON_38420B885C7001400',
-        groupState: { volume: 38, mute: false },
-      },
-      members: [
-        {
-          uuid: 'RINCON_38420B885C7001400',
-          state: {
-            volume: 38,
-            mute: false,
-            equalizer: { bass: 0, treble: 0, loudness: false },
-            currentTrack: { artist: '', title: '', album: '', albumArtUri: '', duration: 0, uri: '', trackUri: '', type: 'track', stationName: '' },
-            nextTrack: { artist: '', title: '', album: '', albumArtUri: '', duration: 0, uri: '' },
-            trackNo: 0,
-            elapsedTime: 0,
-            elapsedTimeFormatted: '00:00:00',
-            playbackState: 'STOPPED',
-            playMode: { repeat: 'none', shuffle: false, crossfade: false },
-          },
-          roomName: 'OA-Gym',
-          coordinator: 'RINCON_38420B885C7001400',
-          groupState: { volume: 38, mute: false },
-        },
-        {
-          uuid: 'RINCON_38420B885C7001400',
-          state: {
-            volume: 38,
-            mute: false,
-            equalizer: { bass: 0, treble: 0, loudness: false },
-            currentTrack: { artist: '', title: '', album: '', albumArtUri: '', duration: 0, uri: '', trackUri: '', type: 'track', stationName: '' },
-            nextTrack: { artist: '', title: '', album: '', albumArtUri: '', duration: 0, uri: '' },
-            trackNo: 0,
-            elapsedTime: 0,
-            elapsedTimeFormatted: '00:00:00',
-            playbackState: 'STOPPED',
-            playMode: { repeat: 'none', shuffle: false, crossfade: false },
-          },
-          roomName: 'OB-Gym',
-          coordinator: 'RINCON_38420B885C7001400',
-          groupState: { volume: 38, mute: false },
-        },
-      ],
-    },
-    1: {
-      uuid: 'RINCON_38420B885C7001400',
-      coordinator: {
-        uuid: 'RINCON_38420B885C7001400',
-        state: {
-          volume: 38,
-          mute: false,
-          equalizer: { bass: 0, treble: 0, loudness: false },
-          currentTrack: { artist: '', title: '', album: '', albumArtUri: '', duration: 0, uri: '', trackUri: '', type: 'track', stationName: '' },
-          nextTrack: { artist: '', title: '', album: '', albumArtUri: '', duration: 0, uri: '' },
-          trackNo: 0,
-          elapsedTime: 0,
-          elapsedTimeFormatted: '00:00:00',
-          playbackState: 'STOPPED',
-          playMode: { repeat: 'none', shuffle: false, crossfade: false },
-        },
-        roomName: 'OA-GAMEROOM',
-        coordinator: 'RINCON_38420B885C7001400',
-        groupState: { volume: 38, mute: false },
-      },
-      members: [
-        {
-          uuid: 'RINCON_38420B885C7001400',
-          state: {
-            volume: 38,
-            mute: false,
-            equalizer: { bass: 0, treble: 0, loudness: false },
-            currentTrack: { artist: '', title: '', album: '', albumArtUri: '', duration: 0, uri: '', trackUri: '', type: 'track', stationName: '' },
-            nextTrack: { artist: '', title: '', album: '', albumArtUri: '', duration: 0, uri: '' },
-            trackNo: 0,
-            elapsedTime: 0,
-            elapsedTimeFormatted: '00:00:00',
-            playbackState: 'STOPPED',
-            playMode: { repeat: 'none', shuffle: false, crossfade: false },
-          },
-          roomName: 'OA-GAMEROOM',
-          coordinator: 'RINCON_38420B885C7001400',
-          groupState: { volume: 38, mute: false },
-        },
-      ],
-    },
+const express = require('express');
+const http = require('http');
+const WebSocket = require('ws');
+const bodyParser = require('body-parser'); // To parse JSON request bodies
+const SonosSystem = require('sonos-discovery');
+const sonosRoutes = require('./routers/sonosRoutes');
+const testJson = require('./testes/mockTest.json');
+const app = express();
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
+
+// Middleware to parse JSON
+app.use(bodyParser.json());
+
+// Initialize Sonos System
+const discovery = new SonosSystem({});
+
+// Use Sonos Routes
+app.use('/', sonosRoutes(discovery));
+
+// WebSocket Connection
+// wss.on('connection', (ws) => {
+//   console.log('WebSocket client connected');
+
+//   // Send initial topology
+//   //ws.send(JSON.stringify({ type: 'initial', data: discovery.zones }));
+//   ws.send(JSON.stringify({ type: 'initial', data: testJson }));
+
+//   // Update client on topology changes
+//   discovery.on('topology-change', (zones) => {
+//     ws.send(JSON.stringify({ type: 'topology-change', data: zones }));
+//   });
+
+//   ws.on('close', () => console.log('WebSocket client disconnected'));
+// });
+
+wss.on('connection', (ws) => {
+  console.log('WebSocket client connected');
+
+  //ws.send(JSON.stringify({ type: 'initial', data: testJson }));
+  ws.send(JSON.stringify({ type: 'initial', data: discovery.zones }));
+
+  discovery.on('topology-change', (zones) => {
+    console.log('Sending topology change:', zones);
+    ws.send(JSON.stringify({ type: 'topology-change', data: zones }));
   });
+
+  ws.on('close', () => console.log('WebSocket client disconnected'));
 });
 
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+// Start server
+const PORT = 3000;
+server.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
