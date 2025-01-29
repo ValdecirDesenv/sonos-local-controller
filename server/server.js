@@ -5,10 +5,11 @@ const fs = require('fs');
 const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
-const bodyParser = require('body-parser'); // To parse JSON request bodies
+const bodyParser = require('body-parser');
 const SonosSystem = require('sonos-discovery');
 const sonosRoutes = require('./routers/sonosRoutes');
 const testJson = require('./testes/mockTest.json');
+const { off } = require('process');
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
@@ -22,25 +23,20 @@ if (!fs.existsSync(defaultDevicesPath)) {
 }
 const defaultDevicesData = JSON.parse(fs.readFileSync(defaultDevicesPath, 'utf8'));
 
-// Middleware to parse JSON
 app.use(bodyParser.json());
 
-// Initialize Sonos System
 const discovery = new SonosSystem({});
 
-// Use Sonos Routes
 app.use('/', sonosRoutes(discovery));
 
 wss.on('connection', (ws) => {
   console.log('WebSocket client connected');
 
-  // Helper function to save updated default devices data
   const saveDefaultDevicesData = () => {
     fs.writeFileSync(defaultDevicesPath, JSON.stringify(defaultDevicesData, null, 2));
     console.log('Default devices data updated and saved.');
   };
 
-  // Add missing zones to defaultDevicesData
   const newZones = discovery.zones.filter((zone) => !defaultDevicesData[zone.uuid]);
   if (newZones.length > 0) {
     newZones.forEach((zone) => {
@@ -53,21 +49,24 @@ wss.on('connection', (ws) => {
     saveDefaultDevicesData();
   }
 
-  // Identify extra zones in defaultDevicesData not present in discovery.zones
+  // Identify extra zones that are in defaultDevicesData but not in discovery.zones
   const extraZones = Object.keys(defaultDevicesData).filter((uuid) => !discovery.zones.some((zone) => zone.uuid === uuid));
 
   if (extraZones.length > 0) {
     console.log('Default devices have more zones than discovery zones. Extra zones:', extraZones);
   }
 
-  const dataToSend = discovery.zones.length > 0 ? { zones: discovery.zones, fromDefault: false } : { zones: Object.values(defaultDevicesData), fromDefault: true };
-  // Create the response data
-  const responseData = (dataToSend.zones || []).map((zone) => ({
+  // Determine the data to send based on whether discovery zones are available
+  const dataToSend = discovery.zones.length > 0 ? { zones: discovery.zones, offlineData: false } : { zones: Object.values(defaultDevicesData), offlineData: true };
+
+  // Map the zones to the response format
+  const responseData = dataToSend.zones.map((zone) => ({
     keepPlaying: zone.keepPlaying,
     uuid: zone.uuid,
     name: zone.name,
     id: zone.id,
     coordinator: zone.coordinator,
+    offLineZone: false,
     members: zone.members.map((member) => ({
       uuid: member.uuid,
       name: member.name,
@@ -76,8 +75,28 @@ wss.on('connection', (ws) => {
     })),
   }));
 
+  // Add extra zones to the response data with an offline flag
+  extraZones.forEach((uuid) => {
+    const extraZone = defaultDevicesData[uuid];
+    responseData.push({
+      keepPlaying: extraZone.keepPlaying,
+      uuid: extraZone.uuid,
+      name: extraZone.name,
+      id: extraZone.id,
+      coordinator: extraZone.coordinator,
+      members: extraZone.members.map((member) => ({
+        uuid: member.uuid,
+        name: member.name,
+        roomName: member.roomName,
+        state: member.state,
+      })),
+      offLineZone: true,
+    });
+  });
+
   // Include a flag if extra zones exist
   const initialData = {
+    offlineData: dataToSend.offlineData,
     type: 'initial',
     data: responseData,
     extraZones: extraZones.length > 0 ? extraZones : null, // Include extra zones if any
