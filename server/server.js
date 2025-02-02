@@ -58,7 +58,6 @@ wss.on('connection', (ws) => {
     console.log('Default devices have more zones than discovery zones. historical zones:', historical);
   }
 
-  // Determine the data to send based on whether discovery zones are available
   const dataToSend = discovery.zones.length > 0 ? { zones: discovery.zones, offLineData: false } : { zones: Object.values(defaultDevicesData), offLineData: true };
 
   const historicalDevices = dataToSend.zones.map((zone) => ({
@@ -73,7 +72,6 @@ wss.on('connection', (ws) => {
     })),
   }));
 
-  // Add extra zones to the response data with an offline flag
   let zonesOff = [];
   historical.forEach((device) => {
     const extraZone = defaultDevicesData[device.uuid];
@@ -111,7 +109,6 @@ wss.on('connection', (ws) => {
     data: historicalDevices,
   };
 
-  // Send the initial data to the client
   ws.send(JSON.stringify(initialData));
 
   ws.on('message', (message) => {
