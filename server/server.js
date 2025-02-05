@@ -62,6 +62,9 @@ wss.on('connection', (ws) => {
 
   const historicalDevices = dataToSend.zones.map((zone) => ({
     keepPlaying: zone.keepPlaying || false,
+    hasTimePlay: zone.hasTimePlay || false,
+    timeStart: zone.timeStart || '06:00',
+    timeStop: zone.timeStop || '20:00',
     name: zone.coordinator.roomName,
     uuid: zone.uuid,
     state: zone.coordinator.state.playbackState,
@@ -78,6 +81,9 @@ wss.on('connection', (ws) => {
     if (extraZone) {
       zonesOff.push({
         keepPlaying: extraZone.keepPlaying || false,
+        hasTimePlay: extraZone.hasTimePlay || false,
+        timeStart: extraZone.timeStart || '06:00',
+        timeStop: extraZone.timeStop || '21:00',
         uuid: extraZone.uuid,
         name: extraZone.coordinator.name,
         coordinator: extraZone.coordinator,
@@ -114,17 +120,28 @@ wss.on('connection', (ws) => {
   ws.on('message', (message) => {
     try {
       const parsedMessage = JSON.parse(message);
-      if (parsedMessage.type === 'toggle-update') {
-        const { groupId, state } = parsedMessage;
-        if (defaultDevicesData[groupId]) {
-          console.log(`Toggle state updated: Group ID = ${groupId}, State = ${state}`);
+      //const { uuid, state } = parsedMessage;
+      if (!defaultDevicesData[parsedMessage.uuid]) {
+        console.warn(`Group ID ${uuid} not found in default devices.`);
+        return;
+      }
 
-          defaultDevicesData[groupId].keepPlaying = state;
-          saveDefaultDevicesData();
-        } else {
-          console.warn(`Group ID ${groupId} not found in default devices.`);
-        }
-        console.log(`${defaultDevicesData[groupId].coordinator.roomName}, Device ID: ${defaultDevicesData[groupId].id}, keepPlaying: ${defaultDevicesData[groupId].keepPlaying}`);
+      if (parsedMessage.type === 'toggle-update') {
+        const { uuid, isKeepPlaying } = parsedMessage;
+        console.log(`Toggle state updated: Group ID = ${uuid}, hasTimePlay = ${isKeepPlaying}`);
+        defaultDevicesData[uuid].keepPlaying = isKeepPlaying;
+        console.log(`${defaultDevicesData[uuid].coordinator.roomName}, Device ID: ${defaultDevicesData[uuid].id}, keepPlaying: ${defaultDevicesData[uuid].keepPlaying}`);
+        saveDefaultDevicesData();
+      } else if (parsedMessage.type === 'time-range-update') {
+        const { uuid, timeStart, timeStop, hasTimePlay } = parsedMessage;
+        defaultDevicesData[uuid].timeStart = timeStart ? timeStart : '6:00';
+        defaultDevicesData[uuid].timeStop = timeStop ? timeStop : '20:00';
+        defaultDevicesData[uuid].hasTimePlay = hasTimePlay;
+
+        console.log(`${defaultDevicesData[uuid].coordinator.roomName}, Device uuid: ${uuid}, Time Start: ${defaultDevicesData[uuid].timeStart}, Time Stop: ${defaultDevicesData[uuid].timeStop}`);
+        saveDefaultDevicesData();
+      } else {
+        console.warn(`Request Type : ${parsedMessage.type} not found.`);
       }
     } catch (error) {
       console.error('Error handling WebSocket message:', error);
