@@ -1,0 +1,2086 @@
+{
+  "RINCON_C4387554734301400": {
+    "coordinator": {
+      "uuid": "RINCON_C4387554734301400",
+      "coordinator": "RINCON_C4387554734301400",
+      "roomName": "2C-MeetingRoom",
+      "state": {
+        "volume": 0,
+        "mute": false,
+        "equalizer": {
+          "bass": 0,
+          "treble": 0,
+          "loudness": false
+        },
+        "currentTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": "",
+          "trackUri": "",
+          "type": "track",
+          "stationName": ""
+        },
+        "nextTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": ""
+        },
+        "trackNo": 0,
+        "elapsedTime": 0,
+        "elapsedTimeFormatted": "00:00:00",
+        "playbackState": "STOPPED",
+        "playMode": {
+          "repeat": "none",
+          "shuffle": false,
+          "crossfade": false
+        }
+      },
+      "groupState": {
+        "volume": 0,
+        "mute": false
+      },
+      "avTransportUri": "",
+      "avTransportUriMetadata": ""
+    },
+    "members": [
+      {
+        "uuid": "RINCON_C4387554734301400",
+        "coordinator": "RINCON_C4387554734301400",
+        "roomName": "2C-MeetingRoom",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      }
+    ],
+    "uuid": "RINCON_C4387554734301400",
+    "id": "RINCON_C4387554734301400:2856775444",
+    "keepPlaying": true,
+    "timeStart": "09:00",
+    "timeStop": "20:00",
+    "hasTimePlay": false
+  },
+  "RINCON_C4387554728601400": {
+    "coordinator": {
+      "uuid": "RINCON_C4387554728601400",
+      "coordinator": "RINCON_C4387554728601400",
+      "roomName": "2A-Office-Yonge",
+      "state": {
+        "volume": 0,
+        "mute": false,
+        "equalizer": {
+          "bass": 0,
+          "treble": 0,
+          "loudness": false
+        },
+        "currentTrack": {
+          "duration": 0,
+          "uri": "x-rincon-stream:RINCON_C4387554728601400",
+          "trackUri": "x-rincon-stream:RINCON_C4387554728601400",
+          "type": "line_in",
+          "stationName": ""
+        },
+        "nextTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": ""
+        },
+        "trackNo": 1,
+        "elapsedTime": 1738358683,
+        "elapsedTimeFormatted": "77:24:43",
+        "playbackState": "PLAYING",
+        "playMode": {
+          "repeat": "none",
+          "shuffle": false,
+          "crossfade": false
+        }
+      },
+      "groupState": {
+        "volume": 0,
+        "mute": false
+      },
+      "avTransportUri": "x-rincon-stream:RINCON_C4387554728601400",
+      "avTransportUriMetadata": "<DIDL-Lite xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\" xmlns:r=\"urn:schemas-rinconnetworks-com:metadata-1-0/\" xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\"><item id=\"playback\" parentID=\"0\" restricted=\"false\"><dc:title>loadLineIn</dc:title><upnp:class>object.item.audioItem.linein</upnp:class><res x-rincon-stream>x-rincon-stream:RINCON_C4387554728601400</res></item></DIDL-Lite>"
+    },
+    "members": [
+      {
+        "uuid": "RINCON_C4387554728601400",
+        "coordinator": "RINCON_C4387554728601400",
+        "roomName": "2A-Office-Yonge",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "duration": 0,
+            "uri": "x-rincon-stream:RINCON_C4387554728601400",
+            "trackUri": "x-rincon-stream:RINCON_C4387554728601400",
+            "type": "line_in",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 1,
+          "elapsedTime": 1738358683,
+          "elapsedTimeFormatted": "77:24:43",
+          "playbackState": "PLAYING",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "x-rincon-stream:RINCON_C4387554728601400",
+        "avTransportUriMetadata": "<DIDL-Lite xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\" xmlns:r=\"urn:schemas-rinconnetworks-com:metadata-1-0/\" xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\"><item id=\"playback\" parentID=\"0\" restricted=\"false\"><dc:title>loadLineIn</dc:title><upnp:class>object.item.audioItem.linein</upnp:class><res x-rincon-stream>x-rincon-stream:RINCON_C4387554728601400</res></item></DIDL-Lite>"
+      }
+    ],
+    "uuid": "RINCON_C4387554728601400",
+    "id": "RINCON_C4387554728601400:1123429780",
+    "keepPlaying": false,
+    "timeStart": "05:00",
+    "timeStop": "20:00",
+    "hasTimePlay": true
+  },
+  "RINCON_C4387554729E01400": {
+    "coordinator": {
+      "uuid": "RINCON_C4387554729E01400",
+      "coordinator": "RINCON_C4387554729E01400",
+      "roomName": "3A-Office-Yonge",
+      "state": {
+        "volume": 0,
+        "mute": false,
+        "equalizer": {
+          "bass": 0,
+          "treble": 0,
+          "loudness": false
+        },
+        "currentTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": "",
+          "trackUri": "",
+          "type": "track",
+          "stationName": ""
+        },
+        "nextTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": ""
+        },
+        "trackNo": 0,
+        "elapsedTime": 0,
+        "elapsedTimeFormatted": "00:00:00",
+        "playbackState": "STOPPED",
+        "playMode": {
+          "repeat": "none",
+          "shuffle": false,
+          "crossfade": false
+        }
+      },
+      "groupState": {
+        "volume": 0,
+        "mute": false
+      },
+      "avTransportUri": "",
+      "avTransportUriMetadata": ""
+    },
+    "members": [
+      {
+        "uuid": "RINCON_C4387554729E01400",
+        "coordinator": "RINCON_C4387554729E01400",
+        "roomName": "3A-Office-Yonge",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      }
+    ],
+    "uuid": "RINCON_C4387554729E01400",
+    "id": "RINCON_C4387554729E01400:1007060126",
+    "keepPlaying": false,
+    "timeStart": "06:00",
+    "timeStop": "20:00"
+  },
+  "RINCON_C4387554724101400": {
+    "coordinator": {
+      "uuid": "RINCON_C4387554724101400",
+      "coordinator": "RINCON_C4387554724101400",
+      "roomName": "3C-MeetingRoom",
+      "state": {
+        "volume": 0,
+        "mute": false,
+        "equalizer": {
+          "bass": 0,
+          "treble": 0,
+          "loudness": false
+        },
+        "currentTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": "",
+          "trackUri": "",
+          "type": "track",
+          "stationName": ""
+        },
+        "nextTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": ""
+        },
+        "trackNo": 0,
+        "elapsedTime": 0,
+        "elapsedTimeFormatted": "00:00:00",
+        "playbackState": "STOPPED",
+        "playMode": {
+          "repeat": "none",
+          "shuffle": false,
+          "crossfade": false
+        }
+      },
+      "groupState": {
+        "volume": 0,
+        "mute": false
+      },
+      "avTransportUri": "",
+      "avTransportUriMetadata": ""
+    },
+    "members": [
+      {
+        "uuid": "RINCON_C4387554724101400",
+        "coordinator": "RINCON_C4387554724101400",
+        "roomName": "3C-MeetingRoom",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      }
+    ],
+    "uuid": "RINCON_C4387554724101400",
+    "id": "RINCON_C4387554724101400:2179141427",
+    "keepPlaying": false,
+    "timeStart": "06:00",
+    "timeStop": "20:00"
+  },
+  "RINCON_C43875810C3B01400": {
+    "coordinator": {
+      "uuid": "RINCON_C43875810C3B01400",
+      "coordinator": "RINCON_C43875810C3B01400",
+      "roomName": "0E-IceRoom",
+      "state": {
+        "volume": 0,
+        "mute": false,
+        "equalizer": {
+          "bass": 0,
+          "treble": 0,
+          "loudness": false
+        },
+        "currentTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": "",
+          "trackUri": "",
+          "type": "track",
+          "stationName": ""
+        },
+        "nextTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": ""
+        },
+        "trackNo": 0,
+        "elapsedTime": 0,
+        "elapsedTimeFormatted": "00:00:00",
+        "playbackState": "STOPPED",
+        "playMode": {
+          "repeat": "none",
+          "shuffle": false,
+          "crossfade": false
+        }
+      },
+      "groupState": {
+        "volume": 0,
+        "mute": false
+      },
+      "avTransportUri": "",
+      "avTransportUriMetadata": ""
+    },
+    "members": [
+      {
+        "uuid": "RINCON_C43875810C3B01400",
+        "coordinator": "RINCON_C43875810C3B01400",
+        "roomName": "0E-IceRoom",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      }
+    ],
+    "uuid": "RINCON_C43875810C3B01400",
+    "id": "RINCON_C43875810C3B01400:1899068068",
+    "keepPlaying": false,
+    "timeStart": "06:00",
+    "timeStop": "20:00"
+  },
+  "RINCON_C43875558EF901400": {
+    "coordinator": {
+      "uuid": "RINCON_C43875558EF901400",
+      "coordinator": "RINCON_C43875558EF901400",
+      "roomName": "2D-office-3R",
+      "state": {
+        "volume": 0,
+        "mute": false,
+        "equalizer": {
+          "bass": 0,
+          "treble": 0,
+          "loudness": false
+        },
+        "currentTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": "",
+          "trackUri": "",
+          "type": "track",
+          "stationName": ""
+        },
+        "nextTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": ""
+        },
+        "trackNo": 0,
+        "elapsedTime": 0,
+        "elapsedTimeFormatted": "00:00:00",
+        "playbackState": "STOPPED",
+        "playMode": {
+          "repeat": "none",
+          "shuffle": false,
+          "crossfade": false
+        }
+      },
+      "groupState": {
+        "volume": 0,
+        "mute": false
+      },
+      "avTransportUri": "",
+      "avTransportUriMetadata": ""
+    },
+    "members": [
+      {
+        "uuid": "RINCON_C43875558EF901400",
+        "coordinator": "RINCON_C43875558EF901400",
+        "roomName": "2D-office-3R",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      }
+    ],
+    "uuid": "RINCON_C43875558EF901400",
+    "id": "RINCON_C43875558EF901400:4153870087",
+    "keepPlaying": false,
+    "timeStart": "06:00",
+    "timeStop": "20:00"
+  },
+  "RINCON_38420B89517401400": {
+    "coordinator": {
+      "uuid": "RINCON_38420B89517401400",
+      "coordinator": "RINCON_38420B89517401400",
+      "roomName": "2B-Hallway",
+      "state": {
+        "volume": 0,
+        "mute": false,
+        "equalizer": {
+          "bass": 0,
+          "treble": 0,
+          "loudness": false
+        },
+        "currentTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": "",
+          "trackUri": "",
+          "type": "track",
+          "stationName": ""
+        },
+        "nextTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": ""
+        },
+        "trackNo": 0,
+        "elapsedTime": 0,
+        "elapsedTimeFormatted": "00:00:00",
+        "playbackState": "STOPPED",
+        "playMode": {
+          "repeat": "none",
+          "shuffle": false,
+          "crossfade": false
+        }
+      },
+      "groupState": {
+        "volume": 0,
+        "mute": false
+      },
+      "avTransportUri": "",
+      "avTransportUriMetadata": ""
+    },
+    "members": [
+      {
+        "uuid": "RINCON_38420B89512C01400",
+        "coordinator": "RINCON_38420B89517401400",
+        "roomName": "3B-Hallways",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_38420B8950AC01400",
+        "coordinator": "RINCON_38420B89517401400",
+        "roomName": "4B-Hallway",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_38420B89517401400",
+        "coordinator": "RINCON_38420B89517401400",
+        "roomName": "2B-Hallway",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_C4387554720201400",
+        "coordinator": "RINCON_38420B89517401400",
+        "roomName": "4E-Stairs-Back",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_C43875546F8F01400",
+        "coordinator": "RINCON_38420B89517401400",
+        "roomName": "1E-Office-Back",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_C4387554729801400",
+        "coordinator": "RINCON_38420B89517401400",
+        "roomName": "1D-bar Kitchen",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_38420B89517801400",
+        "coordinator": "RINCON_38420B89517401400",
+        "roomName": "Atrium",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_38420B894F1601400",
+        "coordinator": "RINCON_38420B89517401400",
+        "roomName": "0F-Hallway",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_C43875810C4701400",
+        "coordinator": "RINCON_38420B89517401400",
+        "roomName": "1B-Main-Entrance-Yonge",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_C43875810C7101400",
+        "coordinator": "RINCON_38420B89517401400",
+        "roomName": "1A_OutDoorSpeakers",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      }
+    ],
+    "uuid": "RINCON_38420B89517401400",
+    "id": "RINCON_C43875546F8F01400:2686467587",
+    "keepPlaying": false,
+    "timeStart": "06:00",
+    "timeStop": "20:00"
+  },
+  "RINCON_C438755471DE01400": {
+    "coordinator": {
+      "uuid": "RINCON_C438755471DE01400",
+      "coordinator": "RINCON_C438755471DE01400",
+      "roomName": "3D-Office-3R",
+      "state": {
+        "volume": 0,
+        "mute": false,
+        "equalizer": {
+          "bass": 0,
+          "treble": 0,
+          "loudness": false
+        },
+        "currentTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": "",
+          "trackUri": "",
+          "type": "track",
+          "stationName": ""
+        },
+        "nextTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": ""
+        },
+        "trackNo": 0,
+        "elapsedTime": 0,
+        "elapsedTimeFormatted": "00:00:00",
+        "playbackState": "STOPPED",
+        "playMode": {
+          "repeat": "none",
+          "shuffle": false,
+          "crossfade": false
+        }
+      },
+      "groupState": {
+        "volume": 0,
+        "mute": false
+      },
+      "avTransportUri": "",
+      "avTransportUriMetadata": ""
+    },
+    "members": [
+      {
+        "uuid": "RINCON_C438755471DE01400",
+        "coordinator": "RINCON_C438755471DE01400",
+        "roomName": "3D-Office-3R",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      }
+    ],
+    "uuid": "RINCON_C438755471DE01400",
+    "id": "RINCON_C438755471DE01400:2882467137",
+    "keepPlaying": false,
+    "timeStart": "06:00",
+    "timeStop": "20:00"
+  },
+  "RINCON_C438755575AC01400": {
+    "coordinator": {
+      "uuid": "RINCON_C438755575AC01400",
+      "coordinator": "RINCON_C438755575AC01400",
+      "roomName": "4A-Office-Yonge",
+      "state": {
+        "volume": 0,
+        "mute": false,
+        "equalizer": {
+          "bass": 0,
+          "treble": 0,
+          "loudness": false
+        },
+        "currentTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": "",
+          "trackUri": "",
+          "type": "track",
+          "stationName": ""
+        },
+        "nextTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": ""
+        },
+        "trackNo": 0,
+        "elapsedTime": 0,
+        "elapsedTimeFormatted": "00:00:00",
+        "playbackState": "STOPPED",
+        "playMode": {
+          "repeat": "none",
+          "shuffle": false,
+          "crossfade": false
+        }
+      },
+      "groupState": {
+        "volume": 0,
+        "mute": false
+      },
+      "avTransportUri": "",
+      "avTransportUriMetadata": ""
+    },
+    "members": [
+      {
+        "uuid": "RINCON_C438755575AC01400",
+        "coordinator": "RINCON_C438755575AC01400",
+        "roomName": "4A-Office-Yonge",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      }
+    ],
+    "uuid": "RINCON_C438755575AC01400",
+    "id": "RINCON_C438755575AC01400:853718527",
+    "keepPlaying": false,
+    "timeStart": "06:00",
+    "timeStop": "20:00"
+  },
+  "RINCON_C4387554725301400": {
+    "coordinator": {
+      "uuid": "RINCON_C4387554725301400",
+      "coordinator": "RINCON_C4387554725301400",
+      "roomName": "1F-Washrooms",
+      "state": {
+        "volume": 0,
+        "mute": false,
+        "equalizer": {
+          "bass": 0,
+          "treble": 0,
+          "loudness": false
+        },
+        "currentTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": "",
+          "trackUri": "",
+          "type": "track",
+          "stationName": ""
+        },
+        "nextTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": ""
+        },
+        "trackNo": 0,
+        "elapsedTime": 0,
+        "elapsedTimeFormatted": "00:00:00",
+        "playbackState": "STOPPED",
+        "playMode": {
+          "repeat": "none",
+          "shuffle": false,
+          "crossfade": false
+        }
+      },
+      "groupState": {
+        "volume": 0,
+        "mute": false
+      },
+      "avTransportUri": "",
+      "avTransportUriMetadata": ""
+    },
+    "members": [
+      {
+        "uuid": "RINCON_C43875810C0201400",
+        "coordinator": "RINCON_C4387554725301400",
+        "roomName": "0A-Washrooms",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_C438755574C201400",
+        "coordinator": "RINCON_C4387554725301400",
+        "roomName": "4A-Washrooms-Yonge",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_C4387554725301400",
+        "coordinator": "RINCON_C4387554725301400",
+        "roomName": "1F-Washrooms",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      }
+    ],
+    "uuid": "RINCON_C4387554725301400",
+    "id": "RINCON_C4387554725301400:2006852768",
+    "keepPlaying": false,
+    "timeStart": "06:00",
+    "timeStop": "20:00"
+  },
+  "RINCON_38420B89512C01400": {
+    "coordinator": {
+      "uuid": "RINCON_38420B89512C01400",
+      "coordinator": "RINCON_38420B89512C01400",
+      "roomName": "3B-Hallways",
+      "state": {
+        "volume": 100,
+        "mute": false,
+        "equalizer": {
+          "bass": 0,
+          "treble": 0,
+          "loudness": true
+        },
+        "currentTrack": {
+          "title": "Computer",
+          "duration": 0,
+          "uri": "x-rincon-stream:RINCON_38420B89517401400",
+          "trackUri": "x-rincon-stream:RINCON_38420B89517401400",
+          "type": "line_in",
+          "stationName": ""
+        },
+        "nextTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": ""
+        },
+        "trackNo": 1,
+        "elapsedTime": 279,
+        "elapsedTimeFormatted": "00:04:39",
+        "playbackState": "PLAYING",
+        "playMode": {
+          "repeat": "none",
+          "shuffle": false,
+          "crossfade": false
+        }
+      },
+      "groupState": {
+        "volume": 100,
+        "mute": false
+      },
+      "avTransportUri": "x-rincon-stream:RINCON_38420B89517401400",
+      "avTransportUriMetadata": "<DIDL-Lite xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\" xmlns:r=\"urn:schemas-rinconnetworks-com:metadata-1-0/\" xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\"><item id=\"playback\" parentID=\"0\" restricted=\"false\"><dc:title>loadLineIn</dc:title><upnp:class>object.item.audioItem.linein</upnp:class><res x-rincon-stream>x-rincon-stream:RINCON_38420B89517401400</res></item></DIDL-Lite>"
+    },
+    "members": [
+      {
+        "uuid": "RINCON_C43875546F8F01400",
+        "coordinator": "RINCON_38420B89512C01400",
+        "roomName": "1E-Office-Back",
+        "state": {
+          "volume": 100,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": true,
+            "speechEnhancement": false,
+            "nightMode": false
+          },
+          "currentTrack": {
+            "title": "Computer",
+            "duration": 0,
+            "uri": "x-rincon-stream:RINCON_38420B89517401400",
+            "trackUri": "x-rincon-stream:RINCON_38420B89517401400",
+            "type": "line_in",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 1,
+          "elapsedTime": 279,
+          "elapsedTimeFormatted": "00:04:39",
+          "playbackState": "PLAYING",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 100,
+          "mute": false
+        },
+        "avTransportUri": "x-rincon:RINCON_38420B89512C01400",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_38420B89512C01400",
+        "coordinator": "RINCON_38420B89512C01400",
+        "roomName": "3B-Hallways",
+        "state": {
+          "volume": 100,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": true
+          },
+          "currentTrack": {
+            "title": "Computer",
+            "duration": 0,
+            "uri": "x-rincon-stream:RINCON_38420B89517401400",
+            "trackUri": "x-rincon-stream:RINCON_38420B89517401400",
+            "type": "line_in",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 1,
+          "elapsedTime": 279,
+          "elapsedTimeFormatted": "00:04:39",
+          "playbackState": "PLAYING",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 100,
+          "mute": false
+        },
+        "avTransportUri": "x-rincon-stream:RINCON_38420B89517401400",
+        "avTransportUriMetadata": "<DIDL-Lite xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\" xmlns:r=\"urn:schemas-rinconnetworks-com:metadata-1-0/\" xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\"><item id=\"playback\" parentID=\"0\" restricted=\"false\"><dc:title>loadLineIn</dc:title><upnp:class>object.item.audioItem.linein</upnp:class><res x-rincon-stream>x-rincon-stream:RINCON_38420B89517401400</res></item></DIDL-Lite>"
+      },
+      {
+        "uuid": "RINCON_C4387554720201400",
+        "coordinator": "RINCON_38420B89512C01400",
+        "roomName": "4E-Stairs-Back",
+        "state": {
+          "volume": 100,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": true,
+            "speechEnhancement": false,
+            "nightMode": false
+          },
+          "currentTrack": {
+            "title": "Computer",
+            "duration": 0,
+            "uri": "x-rincon-stream:RINCON_38420B89517401400",
+            "trackUri": "x-rincon-stream:RINCON_38420B89517401400",
+            "type": "line_in",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 1,
+          "elapsedTime": 279,
+          "elapsedTimeFormatted": "00:04:39",
+          "playbackState": "PLAYING",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 100,
+          "mute": false
+        },
+        "avTransportUri": "x-rincon:RINCON_38420B89512C01400",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_38420B8950AC01400",
+        "coordinator": "RINCON_38420B89512C01400",
+        "roomName": "4B-Hallway",
+        "state": {
+          "volume": 100,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": true
+          },
+          "currentTrack": {
+            "title": "Computer",
+            "duration": 0,
+            "uri": "x-rincon-stream:RINCON_38420B89517401400",
+            "trackUri": "x-rincon-stream:RINCON_38420B89517401400",
+            "type": "line_in",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 1,
+          "elapsedTime": 279,
+          "elapsedTimeFormatted": "00:04:39",
+          "playbackState": "PLAYING",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 100,
+          "mute": false
+        },
+        "avTransportUri": "x-rincon:RINCON_38420B89512C01400",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_C4387554729801400",
+        "coordinator": "RINCON_38420B89512C01400",
+        "roomName": "1D-bar Kitchen",
+        "state": {
+          "volume": 100,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": true,
+            "speechEnhancement": false,
+            "nightMode": false
+          },
+          "currentTrack": {
+            "title": "Computer",
+            "duration": 0,
+            "uri": "x-rincon-stream:RINCON_38420B89517401400",
+            "trackUri": "x-rincon-stream:RINCON_38420B89517401400",
+            "type": "line_in",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 1,
+          "elapsedTime": 279,
+          "elapsedTimeFormatted": "00:04:39",
+          "playbackState": "PLAYING",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 100,
+          "mute": false
+        },
+        "avTransportUri": "x-rincon:RINCON_38420B89512C01400",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_38420B89517401400",
+        "coordinator": "RINCON_38420B89512C01400",
+        "roomName": "2B-Hallway",
+        "state": {
+          "volume": 100,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "title": "Computer",
+            "duration": 0,
+            "uri": "x-rincon-stream:RINCON_38420B89517401400",
+            "trackUri": "x-rincon-stream:RINCON_38420B89517401400",
+            "type": "line_in",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 1,
+          "elapsedTime": 279,
+          "elapsedTimeFormatted": "00:04:39",
+          "playbackState": "PLAYING",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 100,
+          "mute": false
+        },
+        "avTransportUri": "x-rincon:RINCON_38420B89512C01400",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_38420B894F1601400",
+        "coordinator": "RINCON_38420B89512C01400",
+        "roomName": "0F-Hallway",
+        "state": {
+          "volume": 100,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": true
+          },
+          "currentTrack": {
+            "title": "Computer",
+            "duration": 0,
+            "uri": "x-rincon-stream:RINCON_38420B89517401400",
+            "trackUri": "x-rincon-stream:RINCON_38420B89517401400",
+            "type": "line_in",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 1,
+          "elapsedTime": 279,
+          "elapsedTimeFormatted": "00:04:39",
+          "playbackState": "PLAYING",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 100,
+          "mute": false
+        },
+        "avTransportUri": "x-rincon:RINCON_38420B89512C01400",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_38420B89517801400",
+        "coordinator": "RINCON_38420B89512C01400",
+        "roomName": "Atrium",
+        "state": {
+          "volume": 100,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "title": "Computer",
+            "duration": 0,
+            "uri": "x-rincon-stream:RINCON_38420B89517401400",
+            "trackUri": "x-rincon-stream:RINCON_38420B89517401400",
+            "type": "line_in",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 1,
+          "elapsedTime": 279,
+          "elapsedTimeFormatted": "00:04:39",
+          "playbackState": "PLAYING",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 100,
+          "mute": false
+        },
+        "avTransportUri": "x-rincon:RINCON_38420B89512C01400",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_C43875810C4701400",
+        "coordinator": "RINCON_38420B89512C01400",
+        "roomName": "1B-Main-Entrance-Yonge",
+        "state": {
+          "volume": 100,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": true,
+            "speechEnhancement": false,
+            "nightMode": false
+          },
+          "currentTrack": {
+            "title": "Computer",
+            "duration": 0,
+            "uri": "x-rincon-stream:RINCON_38420B89517401400",
+            "trackUri": "x-rincon-stream:RINCON_38420B89517401400",
+            "type": "line_in",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 1,
+          "elapsedTime": 279,
+          "elapsedTimeFormatted": "00:04:39",
+          "playbackState": "PLAYING",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 100,
+          "mute": false
+        },
+        "avTransportUri": "x-rincon:RINCON_38420B89512C01400",
+        "avTransportUriMetadata": ""
+      },
+      {
+        "uuid": "RINCON_C43875810C7101400",
+        "coordinator": "RINCON_38420B89512C01400",
+        "roomName": "1A_OutDoorSpeakers",
+        "state": {
+          "volume": 100,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": true,
+            "speechEnhancement": false,
+            "nightMode": false
+          },
+          "currentTrack": {
+            "title": "Computer",
+            "duration": 0,
+            "uri": "x-rincon-stream:RINCON_38420B89517401400",
+            "trackUri": "x-rincon-stream:RINCON_38420B89517401400",
+            "type": "line_in",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 1,
+          "elapsedTime": 279,
+          "elapsedTimeFormatted": "00:04:39",
+          "playbackState": "PLAYING",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 100,
+          "mute": false
+        },
+        "avTransportUri": "x-rincon:RINCON_38420B89512C01400",
+        "avTransportUriMetadata": ""
+      }
+    ],
+    "uuid": "RINCON_38420B89512C01400",
+    "id": "RINCON_C43875546F8F01400:2686467587",
+    "keepPlaying": false
+  }
+}

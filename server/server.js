@@ -1,6 +1,6 @@
 'use strict';
 
-require('events').EventEmitter.defaultMaxListeners = 10;
+require('events').EventEmitter.defaultMaxListeners = 15;
 const path = require('path');
 const fs = require('fs');
 const express = require('express');
@@ -43,7 +43,8 @@ wss.on('connection', (ws) => {
     fs.writeFileSync(defaultDevicesPath, JSON.stringify(defaultDevicesData, null, 2));
     console.log('Default devices data updated and saved.');
   };
-  // const devices = discovery.getAnyPlayer();
+  const devices = discovery.getAnyPlayer();
+
   const historical = discovery.zones.filter((zone) => !defaultDevicesData[zone.uuid]);
   if (historical.length > 0) {
     historical.forEach((zone) => {
@@ -112,11 +113,18 @@ wss.on('connection', (ws) => {
   });
   // }
 
-  // Include a flag if extra zones exist
+  const listDevices = dataToSend.zones.reduce((acc, zone) => {
+    zone.members.forEach((member) => {
+      acc[member.uuid] = member.roomName;
+    });
+    return acc;
+  }, {});
+
   const initialData = {
     offLineData: dataToSend.offLineData,
     type: 'initial',
     data: historicalDevices,
+    devices: listDevices,
   };
 
   ws.send(JSON.stringify(initialData));
