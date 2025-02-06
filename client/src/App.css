@@ -40,3 +40,35 @@
 .read-the-docs {
   color: #888;
 }
+
+/* App.css */
+
+/* Card styling */
+.card {
+  border: 2px solid #28a745;
+  background-color: #eafaf1;
+}
+
+/* Card title */
+.card-title {
+  color: #28a745;
+  font-weight: bold;
+}
+
+/* Table header styling */
+.table th {
+  background-color: #d6d8db;
+  color: #495057;
+  font-weight: bold;
+}
+
+/* Alternating table row colors */
+.table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #e9ecef;
+}
+
+/* Additional custom styles (if needed) */

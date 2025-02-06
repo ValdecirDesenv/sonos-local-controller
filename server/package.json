@@ -12,8 +12,26 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "anesidora": "^1.2.0",
+    "axios": "^1.7.9",
+    "basic-auth": "~1.1.0",
+    "body-parser": "^1.20.3",
     "cors": "^2.8.5",
-    "express": "^4.21.2"
+    "dotenv": "^16.4.7",
+    "elevenlabs-node": "2.0.1",
+    "express": "^4.21.2",
+    "fs": "^0.0.1-security",
+    "fuse.js": "^6.4.1",
+    "html-entities": "^1.2.1",
+    "js": "^0.1.0",
+    "json5": "^2.2.3",
+    "mime": "^1.4.1",
+    "music-metadata": "^1.1.0",
+    "request-promise": "^4.2.2",
+    "serve-static": "^1.15.0",
+    "sonos-discovery": "^1.7.3",
+    "wav-file-info": "0.0.8",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

@@ -1,0 +1,105 @@
+{
+  "RINCON_C4387554734301400": {
+    "coordinator": {
+      "uuid": "RINCON_C4387554734301400",
+      "coordinator": "RINCON_C4387554734301400",
+      "roomName": "2C-MeetingRoom",
+      "state": {
+        "volume": 0,
+        "mute": false,
+        "equalizer": {
+          "bass": 0,
+          "treble": 0,
+          "loudness": false
+        },
+        "currentTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": "",
+          "trackUri": "",
+          "type": "track",
+          "stationName": ""
+        },
+        "nextTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": ""
+        },
+        "trackNo": 0,
+        "elapsedTime": 0,
+        "elapsedTimeFormatted": "00:00:00",
+        "playbackState": "STOPPED",
+        "playMode": {
+          "repeat": "none",
+          "shuffle": false,
+          "crossfade": false
+        }
+      },
+      "groupState": {
+        "volume": 0,
+        "mute": false
+      },
+      "avTransportUri": "",
+      "avTransportUriMetadata": ""
+    },
+    "members": [
+      {
+        "uuid": "RINCON_C4387554734301400",
+        "coordinator": "RINCON_C4387554734301400",
+        "roomName": "2C-MeetingRoom",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      }
+    ],
+    "uuid": "RINCON_C4387554734301400",
+    "id": "RINCON_C4387554734301400:2856775444",
+    "keepPlaying": true
+  }
+}
