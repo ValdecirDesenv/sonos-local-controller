@@ -43,7 +43,7 @@ wss.on('connection', (ws) => {
     fs.writeFileSync(defaultDevicesPath, JSON.stringify(defaultDevicesData, null, 2));
     console.log('Default devices data updated and saved.');
   };
-
+  // const devices = discovery.getAnyPlayer();
   const historical = discovery.zones.filter((zone) => !defaultDevicesData[zone.uuid]);
   if (historical.length > 0) {
     historical.forEach((zone) => {
@@ -62,20 +62,23 @@ wss.on('connection', (ws) => {
 
   const dataToSend = discovery.zones.length > 0 ? { zones: discovery.zones, offLineData: false } : { zones: Object.values(defaultDevicesData), offLineData: true };
 
-  const historicalDevices = dataToSend.zones.map((zone) => ({
-    keepPlaying: zone.keepPlaying || false,
-    hasTimePlay: zone.hasTimePlay || false,
-    timeStart: zone.timeStart || defaultStartTime,
-    timeStop: zone.timeStop || defaultStopTime,
-    name: zone.coordinator.roomName,
-    uuid: zone.uuid,
-    state: zone.coordinator.state.playbackState,
-    coordinator: zone.coordinator,
-    members: zone.members.map((member) => ({
-      roomName: member.roomName,
-      state: member.state,
-    })),
-  }));
+  const historicalDevices = {};
+  dataToSend.zones.forEach((zone) => {
+    historicalDevices[zone.uuid] = {
+      keepPlaying: zone.keepPlaying || false,
+      hasTimePlay: zone.hasTimePlay || false,
+      timeStart: zone.timeStart || defaultStartTime,
+      timeStop: zone.timeStop || defaultStopTime,
+      name: zone.coordinator.roomName,
+      uuid: zone.uuid,
+      state: zone.coordinator.state.playbackState,
+      coordinator: zone.coordinator,
+      members: zone.members.map((member) => ({
+        roomName: member.roomName,
+        state: member.state,
+      })),
+    };
+  });
 
   let zonesOff = [];
   historical.forEach((device) => {
@@ -102,10 +105,9 @@ wss.on('connection', (ws) => {
 
   // TODO: Remove the commented code below
   // if (!dataToSend.offLineData) {
-  historicalDevices.forEach((device) => {
-    if (defaultDevicesData[device.uuid]) {
-      const test = defaultDevicesData[device.uuid].keepPlaying;
-      device.keepPlaying = defaultDevicesData[device.uuid].keepPlaying;
+  Object.keys(historicalDevices).forEach((uuid) => {
+    if (defaultDevicesData[uuid]) {
+      historicalDevices[uuid].keepPlaying = defaultDevicesData[uuid].keepPlaying;
     }
   });
   // }
