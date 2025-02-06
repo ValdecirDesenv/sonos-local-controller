@@ -14,6 +14,8 @@ const { off } = require('process');
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
+const defaultStartTime = '06:00';
+const defaultStopTime = '21:00';
 
 const defaultDevicesPath = path.join(__dirname, 'default.json');
 
@@ -63,8 +65,8 @@ wss.on('connection', (ws) => {
   const historicalDevices = dataToSend.zones.map((zone) => ({
     keepPlaying: zone.keepPlaying || false,
     hasTimePlay: zone.hasTimePlay || false,
-    timeStart: zone.timeStart || '06:00',
-    timeStop: zone.timeStop || '20:00',
+    timeStart: zone.timeStart || defaultStartTime,
+    timeStop: zone.timeStop || defaultStopTime,
     name: zone.coordinator.roomName,
     uuid: zone.uuid,
     state: zone.coordinator.state.playbackState,
@@ -82,8 +84,8 @@ wss.on('connection', (ws) => {
       zonesOff.push({
         keepPlaying: extraZone.keepPlaying || false,
         hasTimePlay: extraZone.hasTimePlay || false,
-        timeStop: extraZone.timeStart || '06:00',
-        timeStop: extraZone.timeStop || '21:00',
+        timeStop: extraZone.timeStart || defaultStartTime,
+        timeStop: extraZone.timeStop || defaultStopTime,
         uuid: extraZone.uuid,
         name: extraZone.coordinator.name,
         coordinator: extraZone.coordinator,
