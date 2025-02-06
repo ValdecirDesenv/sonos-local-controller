@@ -82,7 +82,7 @@ wss.on('connection', (ws) => {
       zonesOff.push({
         keepPlaying: extraZone.keepPlaying || false,
         hasTimePlay: extraZone.hasTimePlay || false,
-        timeStart: extraZone.timeStart || '06:00',
+        timeStop: extraZone.timeStart || '06:00',
         timeStop: extraZone.timeStop || '21:00',
         uuid: extraZone.uuid,
         name: extraZone.coordinator.name,
@@ -134,8 +134,8 @@ wss.on('connection', (ws) => {
         saveDefaultDevicesData();
       } else if (parsedMessage.type === 'time-range-update') {
         const { uuid, timeStart, timeStop, hasTimePlay } = parsedMessage;
-        defaultDevicesData[uuid].timeStart = timeStart ? timeStart : '6:00';
-        defaultDevicesData[uuid].timeStop = timeStop ? timeStop : '20:00';
+        defaultDevicesData[uuid].timeStart = timeStart ? timeStart : defaultDevicesData[uuid].timeStart;
+        defaultDevicesData[uuid].timeStop = timeStop ? timeStop : defaultDevicesData[uuid].timeStop;
         defaultDevicesData[uuid].hasTimePlay = hasTimePlay;
 
         console.log(`${defaultDevicesData[uuid].coordinator.roomName}, Device uuid: ${uuid}, Time Start: ${defaultDevicesData[uuid].timeStart}, Time Stop: ${defaultDevicesData[uuid].timeStop}`);

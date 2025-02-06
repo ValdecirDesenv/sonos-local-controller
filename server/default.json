@@ -101,7 +101,7 @@
     "uuid": "RINCON_C4387554734301400",
     "id": "RINCON_C4387554734301400:2856775444",
     "keepPlaying": true,
-    "timeStart": "06:00",
+    "timeStart": "07:00",
     "timeStop": "20:00",
     "hasTimePlay": true
   },
@@ -199,8 +199,9 @@
     "uuid": "RINCON_C4387554728601400",
     "id": "RINCON_C4387554728601400:1123429780",
     "keepPlaying": false,
-    "timeStart": "06:00",
-    "timeStop": "20:00"
+    "timeStart": "05:00",
+    "timeStop": "20:00",
+    "hasTimePlay": true
   },
   "RINCON_C4387554729E01400": {
     "coordinator": {
