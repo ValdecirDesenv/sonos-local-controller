@@ -1,6 +1,7 @@
 'use strict';
 
-require('events').EventEmitter.defaultMaxListeners = 15;
+require('events').EventEmitter.defaultMaxListeners = 20;
+const { changeGroupVolume, changeGroupPlaybackStatus } = require('./lib/sonosController');
 const path = require('path');
 const fs = require('fs');
 const express = require('express');
@@ -16,7 +17,7 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 const defaultStartTime = '06:00';
 const defaultStopTime = '21:00';
-
+const { EventEmitter } = require('events');
 const defaultDevicesPath = path.join(__dirname, 'default.json');
 
 if (!fs.existsSync(defaultDevicesPath)) {
@@ -73,7 +74,15 @@ wss.on('connection', (ws) => {
       name: zone.coordinator.roomName,
       uuid: zone.uuid,
       state: zone.coordinator.state.playbackState,
-      coordinator: zone.coordinator,
+      coordinator: {
+        ...zone.coordinator,
+        avTransportUri: zone.coordinator.avTransportUri && zone.coordinator.avTransportUri.trim() !== '' ? zone.coordinator.avTransportUri : defaultDevicesData[zone.uuid]?.coordinator?.avTransportUri,
+        avTransportUriMetadata: zone.coordinator.avTransportUriMetadata && zone.coordinator.avTransportUriMetadata.trim() !== '' ? zone.coordinator.avTransportUriMetadata : defaultDevicesData[zone.uuid]?.coordinator?.avTransportUriMetadata,
+        roomName: zone.coordinator.roomName,
+        state: zone.coordinator.state.currentTrack.album && zone.coordinator.state.currentTrack.album.trim() !== '' ? zone.coordinator.state : defaultDevicesData[zone.uuid]?.coordinator.state,
+        roomName: zone.coordinator.roomName,
+        uuid: zone.coordinator.uuid,
+      },
       members: zone.members.map((member) => ({
         roomName: member.roomName,
         state: member.state,
@@ -81,28 +90,28 @@ wss.on('connection', (ws) => {
     };
   });
 
-  let zonesOff = [];
-  historical.forEach((device) => {
-    const extraZone = defaultDevicesData[device.uuid];
-    if (extraZone) {
-      zonesOff.push({
-        keepPlaying: extraZone.keepPlaying || false,
-        hasTimePlay: extraZone.hasTimePlay || false,
-        timeStop: extraZone.timeStart || defaultStartTime,
-        timeStop: extraZone.timeStop || defaultStopTime,
-        uuid: extraZone.uuid,
-        name: extraZone.coordinator.name,
-        coordinator: extraZone.coordinator,
-        members: extraZone.members.map((member) => ({
-          roomName: member.roomName,
-          state: member.state,
-        })),
-        offLineZone: true,
-      });
-    } else {
-      console.warn(`Extra zone with ID ${device.id} not found in default devices.`);
-    }
-  });
+  // let zonesOff = [];
+  // historical.forEach((device) => {
+  //   const extraZone = defaultDevicesData[device.uuid];
+  //   if (extraZone) {
+  //     zonesOff.push({
+  //       keepPlaying: extraZone.keepPlaying || false,
+  //       hasTimePlay: extraZone.hasTimePlay || false,
+  //       timeStop: extraZone.timeStart || defaultStartTime,
+  //       timeStop: extraZone.timeStop || defaultStopTime,
+  //       uuid: extraZone.uuid,
+  //       name: extraZone.coordinator.name,
+  //       coordinator: extraZone.coordinator,
+  //       members: extraZone.members.map((member) => ({
+  //         roomName: member.roomName,
+  //         state: member.state,
+  //       })),
+  //       offLineZone: true,
+  //     });
+  //   } else {
+  //     console.warn(`Extra zone with ID ${device.id} not found in default devices.`);
+  //   }
+  // });
 
   // TODO: Remove the commented code below
   // if (!dataToSend.offLineData) {
@@ -144,6 +153,13 @@ wss.on('connection', (ws) => {
         defaultDevicesData[uuid].keepPlaying = isKeepPlaying;
         console.log(`${defaultDevicesData[uuid].coordinator.roomName}, Device ID: ${defaultDevicesData[uuid].id}, keepPlaying: ${defaultDevicesData[uuid].keepPlaying}`);
         saveDefaultDevicesData();
+        // use just to trigger this test
+        // const player = discovery.getPlayer(defaultDevicesData[uuid].coordinator.roomName);
+        // if (!initialData.offLineData) {
+        //   changeGroupVolume(player, 80)
+        //     .then(() => console.log('Volume changed successfully'))
+        //     .catch((err) => console.error('Failed to change volume:', err.message));
+        // }
       } else if (parsedMessage.type === 'time-range-update') {
         const { uuid, timeStart, timeStop, hasTimePlay } = parsedMessage;
         defaultDevicesData[uuid].timeStart = timeStart ? timeStart : defaultDevicesData[uuid].timeStart;
@@ -153,7 +169,7 @@ wss.on('connection', (ws) => {
         console.log(`${defaultDevicesData[uuid].coordinator.roomName}, Device uuid: ${uuid}, Time Start: ${defaultDevicesData[uuid].timeStart}, Time Stop: ${defaultDevicesData[uuid].timeStop}`);
         saveDefaultDevicesData();
       } else {
-        console.warn(`Request Type : ${parsedMessage.type} not found.`);
+        console.warn(`Request Type : ${parsedMessage.type} not found${player.roomName}.`);
       }
     } catch (error) {
       console.error('Error handling WebSocket message:', error);
@@ -165,8 +181,27 @@ wss.on('connection', (ws) => {
     console.log('WebSocket client disconnected');
   });
 
+  discovery.on('volume-change', (zones) => {
+    console.log(zones, 'WebSocket client disconnected');
+  });
+
+  discovery.on('transport-state', (player) => {
+    console.log(`Playback state changed: ${player.roomName} is now ${player.state.playbackState}`);
+    if (defaultDevicesData[player.uuid].keepPlaying && player.state.playbackState !== 'PLAYING') {
+      console.log(`send a msg ${player.roomName} to  play`);
+      changeGroupPlaybackStatus(player)
+        .then(() => console.log('Playback changed successfully'))
+        .catch((err) => console.error('Failed to change playback:', err.message));
+    } else {
+      console.log('No action requered to change');
+    }
+  });
+
   discovery.on('topology-change', (zones) => {
-    console.log('Topology change detected. Sending updated zones.');
+    zones.forEach((zone) => {
+      console.log(`Room Name: ${zone.coordinator.roomName}, Status: ${zone.coordinator.groupState.mute ? 'Muted' : 'Unmuted'}, State: ${zone.coordinator.state.playbackState}`);
+    });
+    console.log('Topology change detected. Sending updated zones.', zones);
     ws.send(JSON.stringify({ type: 'topology-change', data: zones }));
   });
 });
