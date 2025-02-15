@@ -302,7 +302,10 @@
     ],
     "uuid": "RINCON_C4387554729E01400",
     "id": "RINCON_C4387554729E01400:1007060126",
-    "keepPlaying": false
+    "keepPlaying": true,
+    "timeStart": "06:00",
+    "timeStop": "21:00",
+    "hasTimePlay": true
   },
   "RINCON_38420B89512C01400": {
     "coordinator": {
@@ -1347,8 +1350,11 @@
     ],
     "uuid": "RINCON_C43875810C3B01400",
     "id": "RINCON_C43875810C3B01400:1899068068",
-    "keepPlaying": true,
-    "hasTimePlay": false
+    "keepPlaying": false,
+    "hasTimePlay": true,
+    "timeStart": "06:00",
+    "timeStop": "21:00",
+    "playbackState": "PLAYING"
   },
   "RINCON_C4387554725301400": {
     "coordinator": {
@@ -1559,7 +1565,11 @@
     ],
     "uuid": "RINCON_C4387554725301400",
     "id": "RINCON_C4387554725301400:2006852768",
-    "keepPlaying": true
+    "keepPlaying": true,
+    "timeStart": "06:00",
+    "timeStop": "21:00",
+    "hasTimePlay": true,
+    "playbackState": "PLAYING"
   },
   "RINCON_38420B89517401400": {
     "coordinator": {
@@ -2071,6 +2081,9 @@
     ],
     "uuid": "RINCON_38420B89517401400",
     "id": "RINCON_38420B89517401400:2791556941",
-    "keepPlaying": false
+    "keepPlaying": true,
+    "timeStart": "06:00",
+    "timeStop": "21:00",
+    "hasTimePlay": true
   }
 }

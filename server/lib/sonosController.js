@@ -28,21 +28,43 @@ async function changeGroupVolume(player, volume) {
   }
 }
 
-async function changeGroupPlaybackStatus(player) {
-  const keeplaying = 'PLAYING';
+/**
+ * Changes the playback status of a Sonos player group.
+ *
+ * @param {Object} player - The Sonos player object.
+ * @param {string} player.uuid - The unique identifier of the player.
+ * @param {string} player.roomName - The name of the room where the player is located.
+ * @param {string} status - The desired playback status. Valid statuses are: 'stop', 'play', 'pause'.
+ * @throws {Error} Throws an error if the status is invalid or if there is an issue with the request.
+ * @returns {Promise<string>} A promise that resolves to a message indicating the playback status change.
+ */
+async function changeGroupPlaybackStatus(player, status) {
+  const validStatuses = {
+    stop: 'STOP',
+    play: 'PLAYING',
+    pause: 'PAUSE',
+  };
+
+  const lowerCaseStatus = status.toLowerCase();
+  if (!validStatuses.hasOwnProperty(lowerCaseStatus)) {
+    throw new Error(`Invalid status: ${status}. Valid statuses are: ${Object.keys(validStatuses).join(', ')}`);
+  }
+
+  const action = validStatuses[lowerCaseStatus];
+
   try {
     const response = await axios.post(
-      `${BASE_URL}/api/zone/${player.uuid}/play`,
+      `${BASE_URL}/api/zone/${player.uuid}/${status.toLowerCase()}`,
       {
-        keeplaying,
+        action,
       },
       {
         headers: { 'Content-Type': 'application/json' },
       }
     );
 
-    console.log(`Player Group: ${player.roomName} Playback status changed to ${keeplaying}`);
-    return `{Playback status changed to ${keeplaying} for group ${player.uuid}}`;
+    console.log(`Player Group: ${player.roomName} Playback status changed to ${action}`);
+    return `{Playback status changed to ${action} for group ${player.uuid}}`;
   } catch (error) {
     console.error(`Error setting playback status:`, error.response ? error.response.data : error.message);
     throw error;
