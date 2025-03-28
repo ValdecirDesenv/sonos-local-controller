@@ -10,7 +10,6 @@ const WebSocket = require('ws');
 const bodyParser = require('body-parser');
 const SonosSystem = require('sonos-discovery');
 const sonosRoutes = require('./routers/sonosRoutes');
-const testJson = require('./testes/mockTest.json');
 const { off } = require('process');
 const app = express();
 const server = http.createServer(app);
@@ -27,7 +26,6 @@ if (!fs.existsSync(defaultDevicesPath)) {
 }
 
 let defaultDevicesData = JSON.parse(fs.readFileSync(defaultDevicesPath, 'utf8'));
-const testDevicesData = JSON.parse(fs.readFileSync(defaultDevicesPath, 'utf8'));
 
 app.use(bodyParser.json());
 
@@ -40,32 +38,32 @@ app.use('/', sonosRoutes(discovery));
 wss.on('connection', (ws) => {
   console.log('WebSocket client connected');
 
-  const saveDefaultDevicesData = () => {
-    fs.writeFileSync(defaultDevicesPath, JSON.stringify(defaultDevicesData, null, 2));
+  const saveDefaultDevicesData = (historicalDevices) => {
+    fs.writeFileSync(defaultDevicesPath, JSON.stringify(historicalDevices, null, 2));
     console.log('Default devices data updated and saved.');
   };
-  const devices = discovery.getAnyPlayer();
 
   const dataToSend = discovery.zones.length > 0 ? { zones: discovery.zones, offLineData: false } : { zones: Object.values(defaultDevicesData), offLineData: true };
 
   const historicalDevices = {};
   dataToSend.zones.forEach((zone) => {
     historicalDevices[zone.uuid] = {
-      keepPlaying: zone.keepPlaying || false,
-      hasTimePlay: zone.hasTimePlay || false,
-      triggerStartStop: zone.triggerStartStop || 0,
-      timeStart: zone.timeStart || defaultStartTime,
-      timeStop: zone.timeStop || defaultStopTime,
+      isInTimeFrameToPlay: defaultDevicesData[zone.uuid]?.isInTimeFrameToPlay || true,
+      keepPlaying: defaultDevicesData[zone.uuid]?.keepPlaying || false,
+      hasTimePlay: defaultDevicesData[zone.uuid]?.hasTimePlay || false,
+      triggerStartStop: defaultDevicesData[zone.uuid]?.triggerStartStop || 0,
+      timeStart: defaultDevicesData[zone.uuid]?.timeStart || defaultStartTime,
+      timeStop: defaultDevicesData[zone.uuid]?.timeStop || defaultStopTime,
       name: zone.coordinator.roomName,
       uuid: zone.uuid,
-      playbackState: zone.coordinator.state.playbackState,
+      flagResp: defaultDevicesData[zone.uuid]?.flagResp || false,
+      playbackState: zone.coordinator.state?.playbackState || false,
       coordinator: {
         ...zone.coordinator,
         avTransportUri: zone.coordinator.avTransportUri && zone.coordinator.avTransportUri.trim() !== '' ? zone.coordinator.avTransportUri : defaultDevicesData[zone.uuid]?.coordinator?.avTransportUri,
         avTransportUriMetadata: zone.coordinator.avTransportUriMetadata && zone.coordinator.avTransportUriMetadata.trim() !== '' ? zone.coordinator.avTransportUriMetadata : defaultDevicesData[zone.uuid]?.coordinator?.avTransportUriMetadata,
         roomName: zone.coordinator.roomName,
-        state: zone.coordinator.state.currentTrack.album && zone.coordinator.state.currentTrack.album.trim() !== '' ? zone.coordinator.state : defaultDevicesData[zone.uuid]?.coordinator.state,
-        roomName: zone.coordinator.roomName,
+        state: zone.coordinator.state?.currentTrack.album && zone.coordinator.state.currentTrack.album.trim() !== '' ? zone.coordinator.state : defaultDevicesData[zone.uuid]?.coordinator.state,
         uuid: zone.coordinator.uuid,
       },
       members: zone.members.map((member) => ({
@@ -75,47 +73,81 @@ wss.on('connection', (ws) => {
     };
   });
 
-  setInterval(() => {
-    Object.keys(historicalDevices).forEach((uuid) => {
-      if (historicalDevices[uuid].hasTimePlay) {
-        console.log(`Zone ${historicalDevices[uuid].roomName} has time playing enabled.`);
-        console.log(`Playback state changed: ${historicalDevices[uuid].coordinator.roomName} actual playbackState: ${historicalDevices[uuid].playbackState}`);
-        const currentTime = new Date();
-        const [startHour, startMinute] = historicalDevices[uuid].timeStart.split(':').map(Number);
-        const [stopHour, stopMinute] = historicalDevices[uuid].timeStop.split(':').map(Number);
-        const startTime = new Date();
-        startTime.setHours(startHour, startMinute, 0, 0);
-        const stopTime = new Date();
-        stopTime.setHours(stopHour, stopMinute, 0, 0);
-        const isInTimeRange = currentTime >= startTime && currentTime <= stopTime;
+  if (Object.keys(defaultDevicesData).length === 0) {
+    saveDefaultDevicesData(historicalDevices);
+  }
 
-        if (historicalDevices[uuid].playbackState !== 'PLAYING' && isInTimeRange) {
-          if (historicalDevices[uuid].triggerStartStop < 2) {
-            console.log(`send a msg ${historicalDevices[uuid].coordinator.roomName} to  Start playing`);
-            historicalDevices[uuid].triggerStartStop++;
-            changeGroupPlaybackStatus(historicalDevices[uuid], 'play')
-              .then(() => console.log('Playback changed successfully'))
-              .catch((err) => console.error('Failed to change playback:', err.message));
-          }
-        } else if (historicalDevices[uuid].triggerStartStop > -2 && !isInTimeRange) {
-          console.log(`send a msg ${historicalDevices[uuid].roomName} to  Stop playing`);
-          historicalDevices[uuid].triggerStartStop--;
-          changeGroupPlaybackStatus(historicalDevices[uuid].coordinator, 'stop')
-            .then(() => console.log('Playback changed successfully'))
-            .catch((err) => console.error('Failed to change playback:', err.message));
-        } else {
-          console.log('TIME MENAGEMENT: No action requered to change');
+  function getInTimeFrameToPlay(device) {
+    const currentTime = new Date();
+    const [startHour, startMinute] = device.timeStart.split(':').map(Number);
+    const [stopHour, stopMinute] = device.timeStop.split(':').map(Number);
+    const startTime = new Date();
+    startTime.setHours(startHour, startMinute, 0, 0);
+    const stopTime = new Date();
+    stopTime.setHours(stopHour, stopMinute, 0, 0);
+    return currentTime >= startTime && currentTime <= stopTime;
+  }
+
+  setInterval(async () => {
+    for (const uuid of Object.keys(historicalDevices)) {
+      const device = defaultDevicesData[uuid];
+
+      // Ensure the device has the 'hasTimePlay' property
+      if (!device.hasOwnProperty('hasTimePlay')) {
+        defaultDevicesData[uuid].hasTimePlay = false;
+        continue;
+      }
+
+      const isInTimeRangeToPlay = getInTimeFrameToPlay(device);
+      historicalDevices[device.uuid].isInTimeFrameToPlay = isInTimeRangeToPlay;
+
+      const { keepPlaying, hasTimePlay } = device;
+      const playbackState = historicalDevices[device.uuid]?.playbackState;
+
+      const logAndChangePlayback = async (action) => {
+        console.log(`setInterval: Sending command: ${action === 'play' ? 'Start' : 'Stop'} playing ${device.name}`);
+        try {
+          await changeGroupPlaybackStatus(device.coordinator, action);
+          historicalDevices[device.uuid].playbackState = action === 'play' ? 'PLAYING' : 'PAUSED';
+          historicalDevices[device.uuid].triggerEventTime = new Date();
+          console.log(`setInterval: Playback ${action}ed successfully`);
+        } catch (err) {
+          console.error(`Failed to change playback: ${err.message}`);
+        }
+      };
+
+      if (historicalDevices[device.uuid].triggerEventTime) {
+        const currentTime = new Date();
+        const timeDifference = (currentTime - new Date(historicalDevices[device.uuid].triggerEventTime)) / 1000; // in seconds
+        if (timeDifference <= 10) {
+          console.log(`setInterva: Skipping action for ${device.name} as the last trigger was within 10 seconds.`);
+          return;
+        }
+      }
+
+      if (keepPlaying || (playbackState !== 'PLAYING' && isInTimeRangeToPlay && hasTimePlay)) {
+        await logAndChangePlayback('play');
+      } else if (!keepPlaying && hasTimePlay) {
+        if (isInTimeRangeToPlay) {
+          await logAndChangePlayback('play');
+        } else if (playbackState == 'PLAYING') {
+          await logAndChangePlayback('pause');
         }
       } else {
-        console.log('There is no Time Management');
+        //device.playbackState;console.log(`setInterval: No action required to change playback state. DEVICE: ${device.name}`);
       }
-    });
-  }, 50000);
+    }
+    console.log('------------------------------------');
+  }, 30000);
 
   Object.keys(historicalDevices).forEach((uuid) => {
     if (defaultDevicesData[uuid]) {
-      historicalDevices[uuid].keepPlaying = defaultDevicesData[uuid].keepPlaying;
-      historicalDevices[uuid].hasTimePlay = defaultDevicesData[uuid].hasTimePlay;
+      if (!defaultDevicesData[uuid].hasOwnProperty('keepPlaying')) {
+        historicalDevices[uuid].keepPlaying = false;
+        historicalDevices[uuid].hasTimePlay = false;
+        defaultDevicesData[uuid].keepPlaying = false;
+        defaultDevicesData[uuid].hasTimePlay = false;
+      }
     }
   });
 
@@ -139,7 +171,7 @@ wss.on('connection', (ws) => {
     try {
       const parsedMessage = JSON.parse(message);
       if (!defaultDevicesData[parsedMessage.uuid]) {
-        console.warn(`Group ID ${uuid} not found in default devices.`);
+        console.warn(`Group ID ${parsedMessage.uuid} not found in default devices.`);
         return;
       }
 
@@ -147,16 +179,21 @@ wss.on('connection', (ws) => {
         const { uuid, isKeepPlaying } = parsedMessage;
         console.log(`Toggle state updated: Group ID = ${uuid}, hasTimePlay = ${isKeepPlaying}`);
         defaultDevicesData[uuid].keepPlaying = isKeepPlaying;
-        console.log(`${defaultDevicesData[uuid].coordinator.roomName}, Device ID: ${defaultDevicesData[uuid].id}, keepPlaying: ${defaultDevicesData[uuid].keepPlaying}`);
-        saveDefaultDevicesData();
+        historicalDevices[uuid].keepPlaying = isKeepPlaying;
+
+        console.log(`${historicalDevices[uuid].coordinator.roomName}, Device ID: ${defaultDevicesData[uuid].uuid}, keepPlaying: ${defaultDevicesData[uuid].keepPlaying}`);
+        saveDefaultDevicesData(defaultDevicesData);
       } else if (parsedMessage.type === 'time-range-update') {
         const { uuid, timeStart, timeStop, hasTimePlay } = parsedMessage;
         defaultDevicesData[uuid].timeStart = timeStart ? timeStart : defaultStartTime;
         defaultDevicesData[uuid].timeStop = timeStop ? timeStop : defaultStopTime;
         defaultDevicesData[uuid].hasTimePlay = hasTimePlay;
+        historicalDevices[uuid].timeStart = timeStart ? timeStart : defaultStartTime;
+        historicalDevices[uuid].timeStop = timeStop ? timeStop : defaultStopTime;
+        historicalDevices[uuid].hasTimePlay = hasTimePlay;
 
         console.log(`${defaultDevicesData[uuid].coordinator.roomName}, Device uuid: ${uuid}, hasTimePlay: ${defaultDevicesData[uuid].hasTimePlay}  Time Start: ${defaultDevicesData[uuid].timeStart}, Time Stop: ${defaultDevicesData[uuid].timeStop}`);
-        saveDefaultDevicesData();
+        saveDefaultDevicesData(defaultDevicesData);
       } else {
         console.warn(`Request Type : ${parsedMessage.type} not found${player.roomName}.`);
       }
@@ -166,30 +203,76 @@ wss.on('connection', (ws) => {
   });
 
   ws.on('close', () => {
-    saveDefaultDevicesData();
+    saveDefaultDevicesData(historicalDevices);
     console.log('WebSocket client disconnected');
   });
 
-  discovery.on('transport-state', (player) => {
-    console.log(`Playback state changed: ${player.roomName} is now ${player.state.playbackState}`);
-    if (defaultDevicesData[player.uuid].keepPlaying && player.state.playbackState !== 'PLAYING') {
-      console.log(`send a msg ${player.roomName} to  play`);
-      changeGroupPlaybackStatus(player, 'play')
-        .then(() => console.log('Playback changed successfully'))
-        .catch((err) => console.error('Failed to change playback:', err.message));
-    } else {
-      console.log('No action requered to change');
+  discovery.on('transport-state', async (player) => {
+    if (!player || !player.uuid) {
+      console.error('transport-state event received an invalid player:', player);
+      return;
     }
-    defaultDevicesData[player.uuid].playbackState = player.state.playbackState;
-  });
 
-  // discovery.on('topology-change', (zones) => {
-  //   zones.forEach((zone) => {
-  //     console.log(`Room Name: ${zone.coordinator.roomName}, Status: ${zone.coordinator.groupState.mute ? 'Muted' : 'Unmuted'}, State: ${zone.coordinator.state.playbackState}`);
-  //   });
-  //   console.log('Topology change detected. Sending updated zones.', zones);
-  //   ws.send(JSON.stringify({ type: 'topology-change', data: zones }));
-  // });
+    if (!historicalDevices[player.uuid]) {
+      console.warn(`discovery.on: Player with UUID ${player.uuid} not found in historicalDevices.`);
+      return;
+    }
+
+    if (!player.state || !player.state.playbackState) {
+      console.warn(`discovery.on: Missing playbackState for player ${player.roomName} (${player.uuid}).`);
+      return;
+    }
+
+    const device = defaultDevicesData[player.uuid];
+    const isInTimeRangeToPlay = getInTimeFrameToPlay(device);
+
+    const { keepPlaying, isInTimeFrameToPlay, hasTimePlay } = historicalDevices[player.uuid];
+    const playbackState = player.state.playbackState;
+
+    const logAndChangePlayback = async (action) => {
+      console.log(`discovery.on: Sending command: ${action === 'play' ? 'Start' : 'Stop'} playing ${player.roomName}`);
+      try {
+        await changeGroupPlaybackStatus(player, action);
+        console.log(`Playback ${action}ed successfully`);
+        historicalDevices[player.uuid].playbackState = player.state.playbackState;
+        historicalDevices[player.uuid].triggerEventTime = new Date();
+      } catch (err) {
+        console.error(`Failed to change playback:`, err.message);
+      }
+    };
+
+    if (historicalDevices[player.uuid].triggerEventTime) {
+      const currentTime = new Date();
+      const timeDifference = (currentTime - new Date(historicalDevices[player.uuid].triggerEventTime)) / 1000; // in seconds
+      if (timeDifference <= 10) {
+        console.log(`discovery.on: Skipping action for ${player.roomName} as the last trigger was within 10 seconds.`);
+        return;
+      }
+    }
+
+    if (keepPlaying) {
+      if (playbackState !== 'PLAYING' && isInTimeFrameToPlay && isInTimeRangeToPlay && hasTimePlay) {
+        await logAndChangePlayback('play');
+      } else {
+        console.log(`discovery.on: No action needed for device ${player.roomName} (keepPlaying is true and already playing or no conditions met).`);
+      }
+    } else if (!keepPlaying && hasTimePlay) {
+      if (isInTimeFrameToPlay) {
+        if (playbackState !== 'PLAYING') {
+          await logAndChangePlayback('play');
+        }
+      } else {
+        if (playbackState === 'PLAYING') {
+          await logAndChangePlayback('pause');
+        }
+      }
+    } else {
+      // console.log(`discovery.on: No action required to change playback state. DEVICE: ${player.roomName}`);
+    }
+
+    // Update historical playbackState after the action is completed
+    historicalDevices[player.uuid].playbackState = player.state.playbackState;
+  });
 });
 
 // Start server
