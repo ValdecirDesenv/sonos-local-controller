@@ -19,29 +19,38 @@ const defaultStopTime = '23:00';
 const { EventEmitter } = require('events');
 const defaultDevicesPath = path.join(__dirname, 'default.json');
 const historicalDevices = {};
-let filteredData = {};
 
-if (!fs.existsSync(defaultDevicesPath)) {
-  fs.writeFileSync(defaultDevicesPath, JSON.stringify({}));
+let filteredData = {};
+let defaultDevicesData = {};
+let payload = {
+  offLineData: true,
+  type: 'initial',
+  data: {},
+  devices: {},
+};
+
+if (fs.existsSync(defaultDevicesPath)) {
+  try {
+    defaultDevicesData = JSON.parse(fs.readFileSync(defaultDevicesPath, 'utf8'));
+    console.log('Default devices loaded from:', defaultDevicesPath);
+  } catch (err) {
+    console.error('Error reading or parsing default devices file:', err.message);
+  }
 } else {
-  console.log('Default devices: ', defaultDevicesPath);
+  console.log('Default devices file not found. Initializing with an empty object.');
+  fs.writeFileSync(defaultDevicesPath, JSON.stringify(defaultDevicesData, null, 2));
 }
 
-let defaultDevicesData = JSON.parse(fs.readFileSync(defaultDevicesPath, 'utf8'));
-
-app.use(bodyParser.json());
 
 const discovery = new SonosSystem({});
 discovery.setMaxListeners(20);
 discovery.removeAllListeners('topology-change');
 
+app.use(bodyParser.json());
 app.use('/', sonosRoutes(discovery));
 
 // Listen for topology changes to keep historicalDevices updated
 discovery.on('topology-change', () => {
-  console.log('Topology change detected. Updating historical devices.');
-
-  // Update historicalDevices with the latest Sonos devices
   discovery.zones.forEach((zone) => {
     const coordinator = zone.coordinator;
     const uuid = coordinator.uuid;
@@ -54,11 +63,11 @@ discovery.on('topology-change', () => {
         volume: coordinator.state?.volume ?? null,
         mute: coordinator.state?.mute ?? false,
         triggerEventTime: null,
-        isInTimeFrameToPlay: false,
         hasTimePlay: defaultDevicesData[zone.uuid]?.hasTimePlay || true,
         timeStart: defaultDevicesData[zone.uuid]?.timeStart || defaultStartTime,
         timeStop: defaultDevicesData[zone.uuid]?.timeStop || defaultStopTime,
         keepPlaying: defaultDevicesData[zone.uuid]?.keepPlaying || false,
+        isInTimeFrameToPlay: defaultDevicesData[zone.uuid]?.isInTimeFrameToPlay || false,
       };
       console.log(`Added new device: ${coordinator.roomName} (UUID: ${uuid})`);
     } else {
@@ -102,14 +111,32 @@ function getInTimeFrameToPlay(device) {
   return currentTime >= startTime && currentTime <= stopTime;
 }
 
-const dataToSend = discovery.zones.length > 0 ? { zones: discovery.zones, offLineData: false } : { zones: Object.values(defaultDevicesData), offLineData: true };
+// Define a function to filter data
+function getFilteredData(dataToSend, defaultDevicesData) {
+  return dataToSend.zones.map((zone) => ({
+    uuid: zone.uuid,
+    coordinator: {
+      roomName: zone.coordinator.roomName,
+      uuid: zone.coordinator.uuid,
+      state: {
+        playbackState: zone.coordinator.state?.playbackState || 'STOPPED',
+        volume: zone.coordinator.state?.volume ?? null,
+        mute: zone.coordinator.state?.mute ?? false,
+      },
+    },
+    members: zone.members.map((member) => ({
+      roomName: member.roomName,
+      state: member.state,
+    })),
+    hasTimePlay: defaultDevicesData[zone.uuid]?.hasTimePlay || true,
+    timeStart: defaultDevicesData[zone.uuid]?.timeStart || defaultStartTime,
+    timeStop: defaultDevicesData[zone.uuid]?.timeStop || defaultStopTime,
+    keepPlaying: defaultDevicesData[zone.uuid]?.keepPlaying || false,
+    isInTimeFrameToPlay:defaultDevicesData[zone.uuid]?.isInTimeFrameToPlay || false,
+  }));
+}
 
-let payload = {
-  offLineData: true,
-  type: 'initial',
-  data: {},
-  devices: {},
-};
+
 
 const logAndChangePlaybackGeneric = async (source, action, getName, getCoordinator, getUUID, getPlaybackState) => {
   console.log(`${source}: Sending command: ${action === 'play' ? 'Start' : 'Stop'} playing ${getName()}`);
@@ -129,7 +156,7 @@ wss.on('connection', (ws) => {
   console.log('WebSocket client connected');
 
   // Fetch connected Sonos devices when a new client connects
-  const fetchSonosDevices = () => {
+  let fetchSonosDevices = () => {
     const sonosDevices = discovery.zones.map((zone) => ({
       uuid: zone.uuid,
       roomName: zone.coordinator.roomName,
@@ -140,41 +167,24 @@ wss.on('connection', (ws) => {
       timeStart: defaultDevicesData[zone.uuid]?.timeStart || defaultStartTime,
       timeStop: defaultDevicesData[zone.uuid]?.timeStop || defaultStopTime,
       keepPlaying: defaultDevicesData[zone.uuid]?.keepPlaying || false,
+      isInTimeFrameToPlay: defaultDevicesData[zone.uuid]?.isInTimeFrameToPlay || false,
     }));
 
     return sonosDevices;
   };
 
   // Prepare the initial payload
-  const dataToSend = {
-    zones: discovery.zones.length > 0 ? discovery.zones : Object.values(defaultDevicesData),
-    offLineData: discovery.zones.length === 0, // Set true if no devices are found
-  };
+  // let dataToSend = {
+  //   zones: discovery.zones.length > 0 ? discovery.zones : Object.values(defaultDevicesData),
+  //   offLineData: discovery.zones.length === 0, // Set true if no devices are found
+  // };
+  let dataToSend = discovery.zones.length > 0 ? { zones: discovery.zones, offLineData: false } : { zones: Object.values(defaultDevicesData), offLineData: true };
 
-  // Filter the necessary data
-  const filteredData = dataToSend.zones.map((zone) => ({
-    uuid: zone.uuid,
-    coordinator: {
-      roomName: zone.coordinator.roomName,
-      uuid: zone.coordinator.uuid,
-      state: {
-        playbackState: zone.coordinator.state?.playbackState || 'STOPPED',
-        volume: zone.coordinator.state?.volume ?? null,
-        mute: zone.coordinator.state?.mute ?? false,
-      },
-    },
-    members: zone.members.map((member) => ({
-      roomName: member.roomName,
-      state: member.state,
-    })),
-    hasTimePlay: defaultDevicesData[zone.uuid]?.hasTimePlay || true,
-    timeStart: defaultDevicesData[zone.uuid]?.timeStart || defaultStartTime,
-    timeStop: defaultDevicesData[zone.uuid]?.timeStop || defaultStopTime,
-    keepPlaying: defaultDevicesData[zone.uuid]?.keepPlaying || false,
-  }));
+  // Call the function to get filtered data
+  let filteredData = getFilteredData(dataToSend, defaultDevicesData);
 
   // Update the payload with the latest device list
-  const payload = {
+  let payload = {
     offLineData: dataToSend.offLineData,
     type: 'initial',
     data: filteredData,
@@ -196,16 +206,22 @@ setInterval(async () => {
   for (const uuid of Object.keys(historicalDevices)) {
     const device = defaultDevicesData[uuid];
 
+    // Ensure the device exists before proceeding
+    if (!device) {
+      console.log(`Device with UUID ${uuid} not found in defaultDevicesData. Skipping.`);
+      continue;
+    }
+
     if (!device.hasOwnProperty('hasTimePlay')) {
       defaultDevicesData[uuid].hasTimePlay = false;
       continue;
     }
 
-    const isInTimeRangeToPlay = getInTimeFrameToPlay(device);
-    historicalDevices[device.uuid].isInTimeFrameToPlay = isInTimeRangeToPlay;
+    const isInTimeFrameToPlay = getInTimeFrameToPlay(device);
+    historicalDevices[uuid].isInTimeFrameToPlay = isInTimeFrameToPlay;
 
-    const { keepPlaying, hasTimePlay } = device;
-    const playbackState = historicalDevices[device.uuid]?.playbackState;
+    const { keepPlaying, hasTimePlay } = historicalDevices[uuid];
+    const playbackState = historicalDevices[uuid]?.playbackState;
 
     const logAndChangePlayback = async (action) => {
       await logAndChangePlaybackGeneric(
@@ -218,19 +234,19 @@ setInterval(async () => {
       );
     };
 
-    if (historicalDevices[device.uuid].triggerEventTime) {
+    if (historicalDevices[uuid].triggerEventTime) {
       const currentTime = new Date();
-      const timeDifference = (currentTime - new Date(historicalDevices[device.uuid].triggerEventTime)) / 1000; // in seconds
+      const timeDifference = (currentTime - new Date(historicalDevices[uuid].triggerEventTime)) / 1000; 
       if (timeDifference <= 10) {
         console.log(`setInterval: Skipping action for ${device.name} as the last trigger was within 10 seconds.`);
         return;
       }
     }
 
-    if (keepPlaying || (playbackState !== 'PLAYING' && isInTimeRangeToPlay && hasTimePlay)) {
+    if (keepPlaying || (playbackState !== 'PLAYING' && isInTimeFrameToPlay && hasTimePlay)) {
       await logAndChangePlayback('play');
     } else if (!keepPlaying && hasTimePlay) {
-      if (isInTimeRangeToPlay) {
+      if (isInTimeFrameToPlay) {
         await logAndChangePlayback('play');
       } else if (playbackState === 'PLAYING') {
         await logAndChangePlayback('pause');
@@ -239,6 +255,7 @@ setInterval(async () => {
       console.log(`setInterval: No action required to change playback state. DEVICE: ${device.name}`);
     }
   }
+  saveDefaultDevicesData(historicalDevices);
   console.log('------------------------------------');
 }, 30000);
 
