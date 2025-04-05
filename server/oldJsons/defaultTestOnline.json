@@ -100,6 +100,15 @@
     ],
     "uuid": "RINCON_C4387554734301400",
     "id": "RINCON_C4387554734301400:2856775444",
-    "keepPlaying": true
+    "keepPlaying": true,
+    "name": "2C-MeetingRoom",
+    "playbackState": "STOPPED",
+    "volume": 0,
+    "mute": false,
+    "triggerEventTime": null,
+    "hasTimePlay": true,
+    "timeStart": "06:00",
+    "timeStop": "23:02",
+    "isInTimeFrameToPlay": true
   }
 }

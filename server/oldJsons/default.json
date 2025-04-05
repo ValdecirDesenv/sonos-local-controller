@@ -5,10 +5,10 @@
     "volume": 0,
     "mute": false,
     "triggerEventTime": null,
-    "isInTimeFrameToPlay": false,
     "hasTimePlay": true,
     "timeStart": "06:00",
     "timeStop": "23:00",
-    "keepPlaying": false
+    "keepPlaying": false,
+    "isInTimeFrameToPlay": false
   }
 }

@@ -1,122 +1,139 @@
 {
   "RINCON_C4387554734301400": {
+    "coordinator": {
+      "uuid": "RINCON_C4387554734301400",
+      "coordinator": "RINCON_C4387554734301400",
+      "roomName": "2C-MeetingRoom",
+      "state": {
+        "volume": 0,
+        "mute": false,
+        "equalizer": {
+          "bass": 0,
+          "treble": 0,
+          "loudness": false
+        },
+        "currentTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": "",
+          "trackUri": "",
+          "type": "track",
+          "stationName": ""
+        },
+        "nextTrack": {
+          "artist": "",
+          "title": "",
+          "album": "",
+          "albumArtUri": "",
+          "duration": 0,
+          "uri": ""
+        },
+        "trackNo": 0,
+        "elapsedTime": 0,
+        "elapsedTimeFormatted": "00:00:00",
+        "playbackState": "STOPPED",
+        "playMode": {
+          "repeat": "none",
+          "shuffle": false,
+          "crossfade": false
+        }
+      },
+      "groupState": {
+        "volume": 0,
+        "mute": false
+      },
+      "avTransportUri": "",
+      "avTransportUriMetadata": ""
+    },
+    "members": [
+      {
+        "uuid": "RINCON_C4387554734301400",
+        "coordinator": "RINCON_C4387554734301400",
+        "roomName": "2C-MeetingRoom",
+        "state": {
+          "volume": 0,
+          "mute": false,
+          "equalizer": {
+            "bass": 0,
+            "treble": 0,
+            "loudness": false
+          },
+          "currentTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": "",
+            "trackUri": "",
+            "type": "track",
+            "stationName": ""
+          },
+          "nextTrack": {
+            "artist": "",
+            "title": "",
+            "album": "",
+            "albumArtUri": "",
+            "duration": 0,
+            "uri": ""
+          },
+          "trackNo": 0,
+          "elapsedTime": 0,
+          "elapsedTimeFormatted": "00:00:00",
+          "playbackState": "STOPPED",
+          "playMode": {
+            "repeat": "none",
+            "shuffle": false,
+            "crossfade": false
+          }
+        },
+        "groupState": {
+          "volume": 0,
+          "mute": false
+        },
+        "avTransportUri": "",
+        "avTransportUriMetadata": ""
+      }
+    ],
+    "uuid": "RINCON_C4387554734301400",
+    "id": "RINCON_C4387554734301400:2856775444",
+    "keepPlaying": true,
     "name": "2C-MeetingRoom",
     "playbackState": "STOPPED",
     "volume": 0,
     "mute": false,
     "triggerEventTime": null,
-    "hasTimePlay": true,
+    "hasTimePlay": false,
     "timeStart": "06:00",
-    "timeStop": "23:00",
-    "keepPlaying": false,
-    "isInTimeFrameToPlay": false
+    "timeStop": "23:02",
+    "isInTimeFrameToPlay": true,
+    "connectionStatus": "offline"
   },
-  "RINCON_C43875558EF901400": {
-    "name": "2D-office-3R",
+  "RINCON_C43875546F7401400": {
+    "name": "Dome5",
+    "uuid": "RINCON_C43875546F7401400",
     "playbackState": "STOPPED",
-    "volume": 0,
+    "volume": 36,
     "mute": false,
     "triggerEventTime": null,
     "hasTimePlay": true,
     "timeStart": "06:00",
     "timeStop": "23:00",
     "keepPlaying": false,
-    "isInTimeFrameToPlay": false
-  },
-  "RINCON_C4387554728601400": {
-    "name": "2A-Office-Yonge",
-    "playbackState": "STOPPED",
-    "volume": 0,
-    "mute": false,
-    "triggerEventTime": null,
-    "hasTimePlay": true,
-    "timeStart": "06:00",
-    "timeStop": "23:00",
-    "keepPlaying": false,
-    "isInTimeFrameToPlay": false
-  },
-  "RINCON_C43875546F8F01400": {
-    "name": "1E-Office-Back",
-    "playbackState": "STOPPED",
-    "volume": 0,
-    "mute": false,
-    "triggerEventTime": null,
-    "hasTimePlay": true,
-    "timeStart": "06:00",
-    "timeStop": "23:00",
-    "keepPlaying": false,
-    "isInTimeFrameToPlay": false
-  },
-  "RINCON_C4387554724101400": {
-    "name": "3C-MeetingRoom",
-    "playbackState": "STOPPED",
-    "volume": 0,
-    "mute": false,
-    "triggerEventTime": null,
-    "hasTimePlay": true,
-    "timeStart": "06:00",
-    "timeStop": "23:00",
-    "keepPlaying": false,
-    "isInTimeFrameToPlay": false
-  },
-  "RINCON_C438755471DE01400": {
-    "name": "3D-Office-3R",
-    "playbackState": "STOPPED",
-    "volume": 0,
-    "mute": false,
-    "triggerEventTime": null,
-    "hasTimePlay": true,
-    "timeStart": "06:00",
-    "timeStop": "23:00",
-    "keepPlaying": false,
-    "isInTimeFrameToPlay": false
-  },
-  "RINCON_C438755575AC01400": {
-    "name": "4A-Office-Yonge",
-    "playbackState": "STOPPED",
-    "volume": 0,
-    "mute": false,
-    "triggerEventTime": null,
-    "hasTimePlay": true,
-    "timeStart": "06:00",
-    "timeStop": "23:00",
-    "keepPlaying": false,
-    "isInTimeFrameToPlay": false
-  },
-  "RINCON_C43875810C0201400": {
-    "name": "0A-Washrooms",
-    "playbackState": "STOPPED",
-    "volume": 0,
-    "mute": false,
-    "triggerEventTime": null,
-    "hasTimePlay": true,
-    "timeStart": "06:00",
-    "timeStop": "23:00",
-    "keepPlaying": false,
-    "isInTimeFrameToPlay": false
-  },
-  "RINCON_C43875810C3B01400": {
-    "name": "0E-IceRoom",
-    "playbackState": "STOPPED",
-    "volume": 0,
-    "mute": false,
-    "triggerEventTime": null,
-    "hasTimePlay": true,
-    "timeStart": "06:00",
-    "timeStop": "23:00",
-    "keepPlaying": false,
-    "isInTimeFrameToPlay": false
-  },
-  "RINCON_38420B89517801400": {
-    "name": "Atrium",
-    "playbackState": "STOPPED",
-    "volume": 0,
-    "mute": false,
-    "triggerEventTime": null,
-    "hasTimePlay": true,
-    "timeStart": "06:00",
-    "timeStop": "23:00",
-    "keepPlaying": false,
-    "isInTimeFrameToPlay": false
+    "isInTimeFrameToPlay": false,
+    "members": [
+      {
+        "roomName": "Dome5",
+        "state": {
+          "playbackState": "STOPPED",
+          "volume": 36,
+          "mute": false
+        }
+      }
+    ],
+    "connectionStatus": "online"
   }
 }
