@@ -202,7 +202,6 @@ setInterval(() => {
 wss.on('connection', (ws, req) => {
   console.log('WebSocket client connected');
 
-  // Assign a unique identifier to each client
   const { query } = url.parse(req.url, true);
   const clientType = query.client || 'unknown';
 
@@ -210,30 +209,6 @@ wss.on('connection', (ws, req) => {
   ws.clientType = clientType;
 
   console.log(`Client connected with ID: ${ws.id}, Type: ${clientType}`);
-
-  // let dataToSend = {
-  //   zones: Object.values(historicalDevices),
-  //   offLineData: discovery.zones.length === 0,
-  // };
-
-  // let fetchSonosDevices = () => {
-  //   const sonosDevices = dataToSend.zones.map((zone) => ({
-  //     uuid: zone.uuid,
-  //     roomName: zone?.coordinator?.roomName ?? zone.name,
-  //   }));
-  //   return sonosDevices;
-  // };
-
-  // let filteredData = getFilteredData(dataToSend);
-
-  // let payload = {
-  //   offLineData: dataToSend.offLineData,
-  //   type: 'initial',
-  //   data: filteredData,
-  //   devices: fetchSonosDevices(),
-  // };
-
-  // ws.send(JSON.stringify(payload));
 
   ws.on('message', (message) => {
     console.log(`Received message from client (ID: ${ws.id}):`);
@@ -294,7 +269,6 @@ wss.on('connection', (ws, req) => {
   });
 });
 
-// Function to broadcast updates to all connected clients
 function broadcastUpdate() {
   payload.data = getFilteredData({
     zones: Object.values(historicalDevices),
