@@ -63,7 +63,7 @@ async function changeGroupPlaybackStatus(player, status) {
       }
     );
 
-    console.log(`Player Group: ${player.roomName} Playback status changed to ${action}`);
+    console.log(`Player Group: ${player.name} Playback status changed to ${action}`);
     return `{Playback status changed to ${action} for group ${player.uuid}}`;
   } catch (error) {
     console.error(`Error setting playback status:`, error.response ? error.response.data : error.message);

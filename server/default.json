@@ -105,7 +105,7 @@
     "playbackState": "STOPPED",
     "volume": 0,
     "mute": false,
-    "triggerEventTime": null,
+    "triggerEventTime": false,
     "hasTimePlay": true,
     "timeStart": "06:00",
     "timeStop": "23:02",
@@ -115,20 +115,20 @@
   "RINCON_C43875546F7401400": {
     "name": "Dome5",
     "uuid": "RINCON_C43875546F7401400",
-    "playbackState": "STOPPED",
+    "playbackState": "PLAYING",
     "volume": 36,
     "mute": false,
-    "triggerEventTime": null,
+    "triggerEventTime": false,
     "hasTimePlay": true,
     "timeStart": "06:00",
     "timeStop": "23:00",
     "keepPlaying": false,
-    "isInTimeFrameToPlay": false,
+    "isInTimeFrameToPlay": true,
     "members": [
       {
         "roomName": "Dome5",
         "state": {
-          "playbackState": "STOPPED",
+          "playbackState": "PLAYING",
           "volume": 36,
           "mute": false
         }
@@ -147,7 +147,7 @@
     "timeStart": "06:00",
     "timeStop": "23:00",
     "keepPlaying": false,
-    "isInTimeFrameToPlay": false,
+    "isInTimeFrameToPlay": true,
     "members": [
       {
         "roomName": "Family Room",
@@ -157,6 +157,7 @@
           "mute": false
         }
       }
-    ]
+    ],
+    "triggerEventTime": false
   }
 }

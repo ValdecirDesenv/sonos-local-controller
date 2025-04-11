@@ -57,7 +57,7 @@ const savehistoricalDevices = (historicalDevices) => {
     return;
   }
   fs.writeFileSync(historicalDevicesPath, JSON.stringify(historicalDevices, null, 2));
-  console.log('Default devices data updated and saved.');
+  //console.log('Default devices data updated and saved.');
 };
 
 function getInTimeFrameToPlay(device) {
@@ -141,38 +141,41 @@ function updateDeviceState() {
         },
       })),
     };
-    console.log(`Device updated/added: ${coordinator.roomName} (UUID: ${uuid})`);
+    //console.log(`Device updated/added: ${coordinator.roomName} (UUID: ${uuid})`);
   });
 
   Object.keys(historicalDevices).forEach((uuid) => {
     if (!discovery.zones.some((zone) => zone.coordinator.uuid === uuid)) {
       historicalDevices[uuid].connectionStatus = 'offline';
-      console.log(`Device marked as offline: ${historicalDevices[uuid].name} (UUID: ${uuid})`);
+      //console.log(`Device marked as offline: ${historicalDevices[uuid].name} (UUID: ${uuid})`);
     }
   });
   savehistoricalDevices(historicalDevices);
 }
 
-const logAndChangePlaybackGeneric = async (source, action, getName, getCoordinator, getUUID, getPlaybackState) => {
-  console.log(`${source}: Sending command: ${action === 'play' ? 'Start' : 'Stop'} playing ${getName()}`);
+async function changeStatusDevice(device, action) {
+  const { name, uuid } = device;
+  //console.log(`changeStatusDevice: ${name} (${uuid}) - Sending command: ${action}`);
+
   try {
-    await changeGroupPlaybackStatus(getCoordinator(), action);
-    console.log(`Playback ${action}ed successfully`);
-    historicalDevices[getUUID()].playbackState = getPlaybackState(action);
-    historicalDevices[getUUID()].triggerEventTime = new Date();
-    payload.data = historicalDevices;
-    broadcastUpdate();
+    3;
+    await changeGroupPlaybackStatus(device, action);
+    console.log(`changeStatusDevice: ${name} - Playback ${action} changed successfully`);
   } catch (err) {
-    console.error(`Failed to change playback:`, err.message);
+    console.error(`changeStatusDevice: Failed to change ${name} to ${action}:`, err.message);
   }
-};
+}
 
 // Listen for topology changes to keep historicalDevices updated
 // ------------------------ DISCOVERY ON ------------------------
-// discovery.on('transport-state', (state) => {
-//   console.log('🔊 Player State Updated:');
-//   console.log(JSON.stringify(state, null, 2));
-// });
+discovery.on('transport-state', (device) => {
+  console.log('Player State Updated:');
+  const { uuid } = device;
+  if (historicalDevices[uuid]) {
+    updateDeviceState();
+    broadcastUpdate();
+  }
+});
 
 discovery.on('device-state-change', (device) => {
   console.log('Device state changed:', device);
@@ -184,20 +187,55 @@ discovery.on('device-state-change', (device) => {
 });
 
 discovery.on('topology-change', () => {
-  console.log('Topology change detected');
+  //console.log('Topology change detected');
   updateDeviceState();
   broadcastUpdate();
 });
 // ------------------------ DISCOVERY ON ------------------------
 
-setInterval(() => {
-  console.log('Currently discovered zones:');
-  discovery.zones.forEach((zone) => {
-    console.log(`Room Name: ${zone.coordinator.roomName}, Volume: ${zone.coordinator.state.volume}`);
-  });
-  updateDeviceState();
-  broadcastUpdate();
-}, 10000);
+// setInterval(() => {
+//   console.log('Currently discovered zones:');
+//   discovery.zones.forEach((zone) => {
+//     console.log(`Room Name: ${zone.coordinator.roomName}, Volume: ${zone.coordinator.state.volume}`);
+//   });
+//   updateDeviceState();
+//   broadcastUpdate();
+// }, 10000);
+
+// -------------------- SET INTERVAL LOGIC --------------------
+setInterval(async () => {
+  for (const deviceKey of Object.keys(historicalDevices)) {
+    const device = historicalDevices[deviceKey];
+    const { uuid, name, playbackState, keepPlaying, hasTimePlay } = device;
+    const triggerEventTime = device?.triggerEventTime ?? false;
+    historicalDevices[deviceKey].triggerEventTime = triggerEventTime;
+    const isInTimeRangeToPlay = getInTimeFrameToPlay(device);
+    device.isInTimeFrameToPlay = isInTimeRangeToPlay;
+    if (String(device.connectionStatus).toLowerCase() === 'offline') {
+      continue;
+    }
+    // Skip if recently triggered
+    if (triggerEventTime) {
+      const secondsSinceLastTrigger = (Date.now() - new Date(triggerEventTime)) / 4000;
+      if (secondsSinceLastTrigger <= 10) {
+        continue;
+      }
+    }
+
+    const shouldPlay = keepPlaying || (playbackState !== 'PLAYING' && isInTimeRangeToPlay && hasTimePlay);
+    const shouldPause = !keepPlaying && hasTimePlay && !isInTimeRangeToPlay && playbackState === 'PLAYING';
+
+    if (shouldPlay) {
+      await changeStatusDevice(device, 'play');
+    } else if (shouldPause) {
+      await changeStatusDevice(device, 'pause');
+    } else {
+      console.log(`No action for ${name}`);
+    }
+  }
+
+  console.log('--- Interval Check Complete ---');
+}, 30000);
 
 wss.on('connection', (ws, req) => {
   console.log('WebSocket client connected');
@@ -208,13 +246,14 @@ wss.on('connection', (ws, req) => {
   ws.id = Date.now();
   ws.clientType = clientType;
 
-  console.log(`Client connected with ID: ${ws.id}, Type: ${clientType}`);
+  //console.log(`Client connected with ID: ${ws.id}, Type: ${clientType}`);
+  broadcastUpdate();
 
   ws.on('message', (message) => {
-    console.log(`Received message from client (ID: ${ws.id}):`);
+    //console.log(`Received message from client (ID: ${ws.id}):`);
     try {
       const parsedMessage = JSON.parse(message);
-      const { type, uuid, hasTimePlay, timeStart, timeStop, keepPlaying } = parsedMessage;
+      const { type, uuid, hasTimePlay, timeStart, timeStop, isKeepPlaying } = parsedMessage;
 
       if (!type) {
         console.error('Message type is missing.');
@@ -231,13 +270,13 @@ wss.on('connection', (ws, req) => {
           if (hasTimePlay !== undefined) historicalDevices[uuid].hasTimePlay = hasTimePlay;
           if (timeStart) historicalDevices[uuid].timeStart = timeStart;
           if (timeStop) historicalDevices[uuid].timeStop = timeStop;
-          console.log(`Updated time frame settings for ${historicalDevices[uuid].name}: hasTimePlay=${historicalDevices[uuid].hasTimePlay}, timeStart=${historicalDevices[uuid].timeStart}, timeStop=${historicalDevices[uuid].timeStop}`);
+          //console.log(`Updated time frame settings for ${historicalDevices[uuid].name}: hasTimePlay=${historicalDevices[uuid].hasTimePlay}, timeStart=${historicalDevices[uuid].timeStart}, timeStop=${historicalDevices[uuid].timeStop}`);
           break;
 
         case 'keepPlayerUpdate':
-          if (keepPlaying !== undefined) {
-            historicalDevices[uuid].keepPlaying = keepPlaying;
-            console.log(`Updated keepPlaying setting for ${historicalDevices[uuid].name}: keepPlaying=${historicalDevices[uuid].keepPlaying}`);
+          if (isKeepPlaying !== undefined) {
+            historicalDevices[uuid].keepPlaying = isKeepPlaying;
+            //console.log(`Updated keepPlaying setting for ${historicalDevices[uuid].name}: keepPlaying=${historicalDevices[uuid].keepPlaying}`);
           }
           break;
 
@@ -247,13 +286,7 @@ wss.on('connection', (ws, req) => {
       }
 
       savehistoricalDevices(historicalDevices);
-      payload.data = getFilteredData({
-        zones: Object.values(historicalDevices),
-        offLineData: discovery.zones.length === 0,
-      });
-      payload.type = 'initial';
-      payload.devices = fetchSonosDevices();
-      broadcastUpdate(payload);
+      broadcastUpdate();
     } catch (error) {
       console.error('Error parsing message:', error);
     }
@@ -282,7 +315,7 @@ function broadcastUpdate() {
 
   wss.clients.forEach((client) => {
     if (client.readyState === WebSocket.OPEN && client.clientType === 'sonosWhachdog') {
-      console.log(`Sending update to React client (ID: ${client.id}) Type: ${client.clientType}`);
+      //console.log(`Sending update to React client (ID: ${client.id}) Type: ${client.clientType}`);
       client.send(JSON.stringify(payload));
     } else if (client.readyState !== WebSocket.OPEN) {
       console.log(`Client (ID: ${client.id}) is not open. Skipping.`);
