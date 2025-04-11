@@ -106,7 +106,7 @@
     "volume": 0,
     "mute": false,
     "triggerEventTime": null,
-    "hasTimePlay": false,
+    "hasTimePlay": true,
     "timeStart": "06:00",
     "timeStop": "23:02",
     "isInTimeFrameToPlay": true,
@@ -135,5 +135,28 @@
       }
     ],
     "connectionStatus": "online"
+  },
+  "RINCON_C43875810C1A01400": {
+    "connectionStatus": "offline",
+    "name": "Family Room",
+    "uuid": "RINCON_C43875810C1A01400",
+    "playbackState": "STOPPED",
+    "volume": 0,
+    "mute": false,
+    "hasTimePlay": true,
+    "timeStart": "06:00",
+    "timeStop": "23:00",
+    "keepPlaying": false,
+    "isInTimeFrameToPlay": false,
+    "members": [
+      {
+        "roomName": "Family Room",
+        "state": {
+          "playbackState": "STOPPED",
+          "volume": 0,
+          "mute": false
+        }
+      }
+    ]
   }
 }

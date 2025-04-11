@@ -7,8 +7,10 @@ const fs = require('fs');
 const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
+const url = require('url');
 const bodyParser = require('body-parser');
-const SonosSystem = require('sonos-discovery');
+//const SonosSystem = require('sonos-discovery');
+const Discovery = require('sonos-discovery');
 const sonosRoutes = require('./routers/sonosRoutes');
 const { off } = require('process');
 const app = express();
@@ -40,7 +42,9 @@ if (fs.existsSync(historicalDevicesPath)) {
   fs.writeFileSync(historicalDevicesPath, JSON.stringify(historicalDevices, null, 2));
 }
 
-const discovery = new SonosSystem({});
+//const discovery = new SonosSystem({});
+const discovery = new Discovery();
+
 discovery.setMaxListeners(20);
 discovery.removeAllListeners('topology-change');
 
@@ -109,34 +113,7 @@ function getFilteredData(dataToSend) {
   return resultFiltereData;
 }
 
-const logAndChangePlaybackGeneric = async (source, action, getName, getCoordinator, getUUID, getPlaybackState) => {
-  console.log(`${source}: Sending command: ${action === 'play' ? 'Start' : 'Stop'} playing ${getName()}`);
-  try {
-    await changeGroupPlaybackStatus(getCoordinator(), action);
-    console.log(`Playback ${action}ed successfully`);
-    historicalDevices[getUUID()].playbackState = getPlaybackState(action);
-    historicalDevices[getUUID()].triggerEventTime = new Date();
-    payload.data = historicalDevices;
-    broadcastUpdate(payload);
-  } catch (err) {
-    console.error(`Failed to change playback:`, err.message);
-  }
-};
-
-// Listen for topology changes to keep historicalDevices updated
-// ------------------------ DISCOVERY ON ------------------------
-discovery.on('device-state-change', (device) => {
-  const { uuid } = device;
-  if (historicalDevices[uuid]) {
-    historicalDevices[uuid].playbackState = device.state?.playbackState ?? 'STOPPED';
-    historicalDevices[uuid].volume = device.state?.volume;
-    historicalDevices[uuid].mute = device.state?.mute ?? false;
-    historicalDevices[uuid].triggerEventTime = new Date();
-    console.log(`Device state updated: ${device.roomName} (UUID: ${uuid})`);
-  }
-});
-
-discovery.on('topology-change', () => {
+function updateDeviceState() {
   discovery.zones.forEach((zone) => {
     const { coordinator, members } = zone;
     const uuid = coordinator.uuid;
@@ -173,41 +150,93 @@ discovery.on('topology-change', () => {
       console.log(`Device marked as offline: ${historicalDevices[uuid].name} (UUID: ${uuid})`);
     }
   });
-
   savehistoricalDevices(historicalDevices);
-  console.log('Historical devices updated:', historicalDevices);
+}
+
+const logAndChangePlaybackGeneric = async (source, action, getName, getCoordinator, getUUID, getPlaybackState) => {
+  console.log(`${source}: Sending command: ${action === 'play' ? 'Start' : 'Stop'} playing ${getName()}`);
+  try {
+    await changeGroupPlaybackStatus(getCoordinator(), action);
+    console.log(`Playback ${action}ed successfully`);
+    historicalDevices[getUUID()].playbackState = getPlaybackState(action);
+    historicalDevices[getUUID()].triggerEventTime = new Date();
+    payload.data = historicalDevices;
+    broadcastUpdate();
+  } catch (err) {
+    console.error(`Failed to change playback:`, err.message);
+  }
+};
+
+// Listen for topology changes to keep historicalDevices updated
+// ------------------------ DISCOVERY ON ------------------------
+// discovery.on('transport-state', (state) => {
+//   console.log('🔊 Player State Updated:');
+//   console.log(JSON.stringify(state, null, 2));
+// });
+
+discovery.on('device-state-change', (device) => {
+  console.log('Device state changed:', device);
+  const { uuid } = device;
+  if (historicalDevices[uuid]) {
+    updateDeviceState();
+    broadcastUpdate();
+  }
+});
+
+discovery.on('topology-change', () => {
+  console.log('Topology change detected');
+  updateDeviceState();
+  broadcastUpdate();
 });
 // ------------------------ DISCOVERY ON ------------------------
 
-wss.on('connection', (ws) => {
+setInterval(() => {
+  console.log('Currently discovered zones:');
+  discovery.zones.forEach((zone) => {
+    console.log(`Room Name: ${zone.coordinator.roomName}, Volume: ${zone.coordinator.state.volume}`);
+  });
+  updateDeviceState();
+  broadcastUpdate();
+}, 10000);
+
+wss.on('connection', (ws, req) => {
   console.log('WebSocket client connected');
 
-  let dataToSend = {
-    zones: Object.values(historicalDevices),
-    offLineData: discovery.zones.length === 0,
-  };
+  // Assign a unique identifier to each client
+  const { query } = url.parse(req.url, true);
+  const clientType = query.client || 'unknown';
 
-  let fetchSonosDevices = () => {
-    const sonosDevices = dataToSend.zones.map((zone) => ({
-      uuid: zone.uuid,
-      roomName: zone?.coordinator?.roomName || zone.name,
-    }));
-    return sonosDevices;
-  };
+  ws.id = Date.now();
+  ws.clientType = clientType;
 
-  let filteredData = getFilteredData(dataToSend);
+  console.log(`Client connected with ID: ${ws.id}, Type: ${clientType}`);
 
-  let payload = {
-    offLineData: dataToSend.offLineData,
-    type: 'initial',
-    data: filteredData,
-    devices: fetchSonosDevices(),
-  };
+  // let dataToSend = {
+  //   zones: Object.values(historicalDevices),
+  //   offLineData: discovery.zones.length === 0,
+  // };
 
-  ws.send(JSON.stringify(payload));
+  // let fetchSonosDevices = () => {
+  //   const sonosDevices = dataToSend.zones.map((zone) => ({
+  //     uuid: zone.uuid,
+  //     roomName: zone?.coordinator?.roomName ?? zone.name,
+  //   }));
+  //   return sonosDevices;
+  // };
+
+  // let filteredData = getFilteredData(dataToSend);
+
+  // let payload = {
+  //   offLineData: dataToSend.offLineData,
+  //   type: 'initial',
+  //   data: filteredData,
+  //   devices: fetchSonosDevices(),
+  // };
+
+  // ws.send(JSON.stringify(payload));
 
   ws.on('message', (message) => {
-    console.log('Received message from client:');
+    console.log(`Received message from client (ID: ${ws.id}):`);
     try {
       const parsedMessage = JSON.parse(message);
       const { type, uuid, hasTimePlay, timeStart, timeStop, keepPlaying } = parsedMessage;
@@ -256,79 +285,33 @@ wss.on('connection', (ws) => {
   });
 
   ws.on('error', (error) => {
-    console.error('WebSocket error:', error);
+    console.error(`WebSocket error (ID: ${ws.id}):`, error);
   });
 
   ws.on('close', () => {
     savehistoricalDevices(historicalDevices);
-    console.log('WebSocket client disconnected');
+    console.log(`WebSocket client disconnected (ID: ${ws.id})`);
   });
 });
 
-// -------------------- SET INTERVAL LOGIC --------------------
-// setInterval(async () => {
-//   for (const uuid of Object.keys(historicalDevices)) {
-//     const device = historicalDevices[uuid];
-
-//     // Ensure the device exists before proceeding
-//     if (!device) {
-//       console.log(`Device with UUID ${uuid} not found in historicalDevices. Skipping.`);
-//       continue;
-//     }
-
-//     if (!device.hasOwnProperty('hasTimePlay')) {
-//       historicalDevices[uuid].hasTimePlay = false;
-//       continue;
-//     }
-
-//     const isInTimeFrameToPlay = getInTimeFrameToPlay(device);
-//     historicalDevices[uuid].isInTimeFrameToPlay = isInTimeFrameToPlay;
-
-//     const { keepPlaying, hasTimePlay } = historicalDevices[uuid];
-//     const playbackState = historicalDevices[uuid]?.playbackState;
-
-//     const logAndChangePlayback = async (action) => {
-//       await logAndChangePlaybackGeneric(
-//         'setInterval',
-//         action,
-//         () => device.name,
-//         () => device.coordinator,
-//         () => device.uuid,
-//         () => device.playbackState
-//       );
-//     };
-
-//     if (historicalDevices[uuid].triggerEventTime) {
-//       const currentTime = new Date();
-//       const timeDifference = (currentTime - new Date(historicalDevices[uuid].triggerEventTime)) / 1000;
-//       if (timeDifference <= 10) {
-//         console.log(`setInterval: Skipping action for ${device.name} as the last trigger was within 10 seconds.`);
-//         return;
-//       }
-//     }
-
-//     if (keepPlaying || (playbackState !== 'PLAYING' && isInTimeFrameToPlay && hasTimePlay)) {
-//       await logAndChangePlayback('play');
-//     } else if (!keepPlaying && hasTimePlay) {
-//       if (isInTimeFrameToPlay) {
-//         await logAndChangePlayback('play');
-//       } else if (playbackState === 'PLAYING') {
-//         await logAndChangePlayback('pause');
-//       }
-//     } else {
-//       console.log(`setInterval: No action required to change playback state. DEVICE: ${device.name}`);
-//     }
-//   }
-//   savehistoricalDevices(historicalDevices);
-//   console.log('------------------------------------');
-// }, 30000);
-
 // Function to broadcast updates to all connected clients
-function broadcastUpdate(payload) {
-  console.log('Broadcasting update to clients:', payload);
+function broadcastUpdate() {
+  payload.data = getFilteredData({
+    zones: Object.values(historicalDevices),
+    offLineData: discovery.zones.length === 0,
+  });
+  payload.type = 'update';
+  payload.devices = Object.values(historicalDevices).map((zone) => ({
+    uuid: zone.uuid,
+    roomName: zone.name,
+  }));
+
   wss.clients.forEach((client) => {
-    if (client.readyState === WebSocket.OPEN) {
+    if (client.readyState === WebSocket.OPEN && client.clientType === 'sonosWhachdog') {
+      console.log(`Sending update to React client (ID: ${client.id}) Type: ${client.clientType}`);
       client.send(JSON.stringify(payload));
+    } else if (client.readyState !== WebSocket.OPEN) {
+      console.log(`Client (ID: ${client.id}) is not open. Skipping.`);
     }
   });
 }
