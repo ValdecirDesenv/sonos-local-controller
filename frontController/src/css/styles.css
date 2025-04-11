@@ -1,0 +1,145 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+nav {
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: auto;
+}
+
+main {
+  flex: 1;
+  padding: 2rem;
+}
+
+h1,
+h2 {
+  color: #333;
+}
+
+p {
+  color: #555;
+}
+
+.card.custom-bg-onLineCard {
+  background-color: rgb(53, 87, 86) !important;
+}
+.card.custom-bg-offLineCard {
+  background-color: rgb(87, 52, 8) !important;
+}
+.custom-bg {
+  background-color: rgb(77, 135, 134);
+}
+.custom-bg-2 {
+  background-color: rgb(40, 99, 98);
+}
+
+.custom-bg-3 {
+  background-color: #217388 !important;
+}
+.custom-bg-4 {
+  --bs-body-bg: #b9b6b4 !important;
+}
+
+.custom-bg-offline {
+  background-color: rgb(126, 52, 30);
+}
+.custom-bg-onLine {
+  background-color: rgb(40, 99, 98);
+}
+
+.custom-text-1 {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #ffffff !important;
+  margin-top: 0;
+  margin-bottom: 0.3rem;
+}
+
+.custom-text-2 {
+  font-size: 0.9rem;
+  color: #fffb28 !important;
+}
+.custom-text-3 {
+  font-size: 0.8rem;
+}
+.card {
+  background-color: #5a3d31;
+  color: white;
+  border-radius: 15px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.container.mt-3 {
+  margin-top: 20px; /* Adds space before time selection */
+}
+
+.table {
+  margin-top: 20px; /* Adds space before the table */
+  background-color: #6e4c3e;
+  border-radius: 10px;
+}
+
+th,
+td {
+  text-align: center;
+  padding: 10px;
+  font-size: 1rem;
+  color: white;
+  border: 1px solid #ddd;
+}
+
+.toggle-switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.time-selector {
+  margin-top: 15px;
+}
+
+.small-text {
+  font-size: 80%;
+}
+.scaled-background {
+  background-image: url("/group-R5.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  padding: 5rem;
+}
+
+.listDevices {
+  padding: 0.3rem;
+  text-align: left;
+  position: relative;
+  left: 0;
+  color: rgb(0, 119, 255);
+  font-size: 0.7rem;
+}
+
+/* --bs-gutter-x:2.5rem */

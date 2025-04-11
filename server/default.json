@@ -116,7 +116,7 @@
     "name": "Dome5",
     "uuid": "RINCON_C43875546F7401400",
     "playbackState": "PLAYING",
-    "volume": 36,
+    "volume": 0,
     "mute": false,
     "triggerEventTime": false,
     "hasTimePlay": true,
@@ -129,7 +129,7 @@
         "roomName": "Dome5",
         "state": {
           "playbackState": "PLAYING",
-          "volume": 36,
+          "volume": 0,
           "mute": false
         }
       }
