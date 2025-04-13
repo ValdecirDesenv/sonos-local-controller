@@ -1,0 +1,18 @@
+.modal-backdrop.show {
+  opacity: 1 !important; /* adjust to your desired darkness */
+  background-color: rgba(0, 0, 0, 0.8); /* dark background */
+  z-index: 1040;
+}
+
+.modal.d-block {
+  opacity: 1 !important;
+  z-index: 1050;
+}
+
+/* Optional: to make modal always appear on top */
+.modal-content {
+  color: #000000 !important; /* Bootstrap's default dark text */
+  background-color: #ffffff !important; /* ensure the background is light */
+  border-radius: 0.5rem;
+  /* color: #000000 !important; */
+}

@@ -1,52 +1,30 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../css/styles.css";
-import { useState, useEffect } from "react";
-import TimeRangeSelector from "./TimeRangeSelector";
-import { Card, CardBody, CardTitle, CardText, Table } from "reactstrap";
-import ToggleSwitch from "./ToggleSwitch";
-import { useWebSocketContext } from "../hooks/WebSocketProvider";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../css/styles.css';
+import { useState, useEffect } from 'react';
+import TimeRangeSelector from './TimeRangeSelector';
+import { Card, CardBody, CardTitle, CardText, Table } from 'reactstrap';
+import ToggleSwitch from './ToggleSwitch';
+import { useWebSocketContext } from '../hooks/WebSocketProvider';
+import GroupCardTitle from './GroupCardTitle';
 
 const GroupDetails = ({ group }) => {
   const [groups, setGroups] = useState();
   const { messages, sendMessage } = useWebSocketContext();
   const [localGroup, setLocalGroup] = useState(group);
-  const [offLineData, setOffLineData] = useState("custom-bg");
+  const [offLineData, setOffLineData] = useState('custom-bg');
   const [hasWorksHours, sethasWorksHours] = useState({});
   const [keepPlayingStates, setKeepPlayingStates] = useState({});
-
-  useEffect(() => {
-    console.log("messages", messages);
-    if (messages && messages[0]) {
-      const updatedGroups = messages[0];
-      if (updatedGroups && updatedGroups.uuid === group.uuid) {
-        setLocalGroup((prevGroup) => ({
-          ...prevGroup,
-          data: updatedGroups.data ?? prevGroup.data,
-          type: updatedGroups.type ?? prevGroup.type,
-        }));
-
-        if (updatedGroups.offLineData) {
-          setOffLineData("custom-bg-offline");
-        } else {
-          setOffLineData("custom-bg");
-        }
-      }
-    }
-  }, [messages]);
 
   useEffect(() => {
     setLocalGroup(group);
   }, [group]);
 
   useEffect(() => {
-    if (localGroup?.type === "initial" || localGroup?.type === "update") {
-      const updatedWorkHours = Object.values(localGroup.data).reduce(
-        (acc, { hasTimePlay, uuid, timeStart, timeStop }) => {
-          acc[uuid] = { hasTimePlay, timeStart, timeStop };
-          return acc;
-        },
-        {}
-      );
+    if (localGroup?.type === 'initial' || localGroup?.type === 'update') {
+      const updatedWorkHours = Object.values(localGroup.data).reduce((acc, { hasTimePlay, uuid, timeStart, timeStop }) => {
+        acc[uuid] = { hasTimePlay, timeStart, timeStop };
+        return acc;
+      }, {});
       sethasWorksHours(updatedWorkHours);
     }
   }, [localGroup]);
@@ -55,7 +33,7 @@ const GroupDetails = ({ group }) => {
     setKeepPlayingStates((prev) => ({ ...prev, [uuid]: isKeepPlaying }));
     if (sendMessage) {
       const message = {
-        type: "keepPlayerUpdate",
+        type: 'keepPlayerUpdate',
         uuid,
         isKeepPlaying,
       };
@@ -78,7 +56,7 @@ const GroupDetails = ({ group }) => {
     const { hasTimePlay, uuid, timeStart, timeStop } = data;
     if (sendMessage) {
       const message = {
-        type: "timeFrameUpdate",
+        type: 'timeFrameUpdate',
         uuid,
         timeStart,
         timeStop,
@@ -89,7 +67,7 @@ const GroupDetails = ({ group }) => {
   };
 
   useEffect(() => {
-    console.log("prop", hasWorksHours);
+    console.log('prop', hasWorksHours);
   }, [hasWorksHours]);
 
   if (!localGroup || !localGroup.data || localGroup.data.length === 0) {
@@ -100,50 +78,33 @@ const GroupDetails = ({ group }) => {
     <div className={`container-fluid my-4 custom-bg ${offLineData}`}>
       <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
         {Object.values(localGroup.data)
-          .sort((a, b) =>
-            a.coordinator.roomName.localeCompare(b.coordinator.roomName)
-          )
+          .sort((a, b) => a.coordinator.roomName.localeCompare(b.coordinator.roomName))
           .map((groupItem, index) => {
             const { coordinator, members } = groupItem;
             const { roomName } = coordinator;
             const { state } = members?.[0] || {};
-            const {
-              volume = "unknown",
-              mute = false,
-              playbackState = "unknown",
-            } = state || {};
+            const { volume = 'unknown', mute = false, playbackState = 'unknown' } = state || {};
             const uuid = groupItem.uuid;
 
-            const isKeepPlaying = groupItem.keepPlaying;
-            const cardConnectionStatus =
-              groupItem.connectionStatus === "online"
-                ? "custom-bg-onLineCard"
-                : "custom-bg-offLineCard";
+            const isKeepPlaying = groupItem.isKeepPlaying;
+            const cardConnectionStatus = groupItem.connectionStatus === 'online' ? 'custom-bg-onLineCard' : 'custom-bg-offLineCard';
 
             return (
               <div className="col custom-bg-4" key={index}>
                 <Card className={`card ${cardConnectionStatus} custom-card`}>
                   <CardBody>
-                    <CardTitle className="custom-text-1" tag="h5">
-                      {`Group: ${roomName}`}
-                    </CardTitle>
+                    <GroupCardTitle groupItem={groupItem} sendMessage={sendMessage} />
                     <CardText className="custom-text-1">
                       <strong>Volume:</strong> {volume}
                     </CardText>
                     <CardText className="custom-text-1">
-                      <strong>Mute:</strong> {mute ? "Yes" : "No"}
+                      <strong>Mute:</strong> {mute ? 'Yes' : 'No'}
                     </CardText>
                     <CardText className="custom-text-1">
                       <strong>Playback State:</strong> {playbackState}
                     </CardText>
 
-                    <ToggleSwitch
-                      label="Always Keep Playing"
-                      defaultChecked={isKeepPlaying}
-                      onToggle={(isKeepPlaying) =>
-                        setKeepPlayingState({ uuid, isKeepPlaying })
-                      }
-                    />
+                    <ToggleSwitch label="Always Keep Playing" defaultChecked={isKeepPlaying} onToggle={(isKeepPlaying) => setKeepPlayingState({ uuid, isKeepPlaying })} />
 
                     <ToggleSwitch
                       label="Audio TimeFrame"
@@ -191,18 +152,10 @@ const GroupDetails = ({ group }) => {
                         {members && members.length > 0 ? (
                           members.map((member, memberIndex) => (
                             <tr key={member.uuid || `member-${memberIndex}`}>
-                              <td className="custom-text-3">
-                                {member.roomName}
-                              </td>
-                              <td className="custom-text-3">
-                                {member.state.volume}
-                              </td>
-                              <td className="custom-text-3">
-                                {member.state.mute ? "Yes" : "No"}
-                              </td>
-                              <td className="custom-text-3">
-                                {member.state.playbackState}
-                              </td>
+                              <td className="custom-text-3">{member.roomName}</td>
+                              <td className="custom-text-3">{member.state.volume}</td>
+                              <td className="custom-text-3">{member.state.mute ? 'Yes' : 'No'}</td>
+                              <td className="custom-text-3">{member.state.playbackState}</td>
                             </tr>
                           ))
                         ) : (
