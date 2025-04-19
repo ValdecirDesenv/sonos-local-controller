@@ -1,31 +1,24 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import NotFound from "./pages/NotFound";
-import Navbar from "./components/Navbar";
-import {
-  WebSocketProvider,
-  useWebSocketContext,
-} from "./hooks/WebSocketProvider";
-import Devices from "./pages/Devices";
-import Topbar from "./components/Topbar";
-import { useEffect, useState } from "react";
-import GroupDetails from "./components/GroupDetails";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
+import Navbar from './components/Navbar';
+import { WebSocketProvider, useWebSocketContext } from './hooks/WebSocketProvider';
+import Topbar from './components/Topbar';
+import { useEffect, useState } from 'react';
+import GroupDetails from './components/GroupDetails';
+import SpotifyWeekList from './pages/SpotifyWeekList';
+import './css/styles.css';
 
 const App: React.FC = () => {
-  const [groups, setGroups] = useState();
+  const [groups, setGroups] = useState(null);
   const { messages } = useWebSocketContext();
 
   useEffect(() => {
-    console.log("WebSocket Messages To App:", messages);
-  }, [messages]);
-
-  useEffect(() => {
-    if (messages && messages[0]) {
-      const value = messages[0];
-      setGroups(value);
+    if (messages?.length) {
+      setGroups(messages[0]);
     } else {
-      console.log("No valid data:", messages);
+      console.warn('No valid data received from WebSocket:', messages);
     }
   }, [messages]);
 
@@ -35,14 +28,12 @@ const App: React.FC = () => {
         <Topbar />
         <div className="d-flex">
           <Navbar group={groups} />
-          <div className="flex-grow-1">
+          <div className="flex-grow-1 custom-flex-grow">
             {groups ? (
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route
-                  path="/devices"
-                  element={<GroupDetails group={groups} />}
-                />
+                <Route path="/spotifyWeekList" element={<SpotifyWeekList />} />
+                <Route path="/devices" element={<GroupDetails group={groups} />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             ) : (

@@ -8,12 +8,10 @@ import { useWebSocketContext } from '../hooks/WebSocketProvider';
 import GroupCardTitle from './GroupCardTitle';
 
 const GroupDetails = ({ group }) => {
-  const [groups, setGroups] = useState();
-  const { messages, sendMessage } = useWebSocketContext();
+  const { sendMessage } = useWebSocketContext();
   const [localGroup, setLocalGroup] = useState(group);
   const [offLineData, setOffLineData] = useState('custom-bg');
   const [hasWorksHours, sethasWorksHours] = useState({});
-  const [keepPlayingStates, setKeepPlayingStates] = useState({});
 
   useEffect(() => {
     setLocalGroup(group);
@@ -30,7 +28,6 @@ const GroupDetails = ({ group }) => {
   }, [localGroup]);
 
   const setKeepPlayingState = ({ uuid, isKeepPlaying }) => {
-    setKeepPlayingStates((prev) => ({ ...prev, [uuid]: isKeepPlaying }));
     if (sendMessage) {
       const message = {
         type: 'keepPlayerUpdate',
@@ -75,7 +72,7 @@ const GroupDetails = ({ group }) => {
   }
 
   return (
-    <div className={`container-fluid my-4 custom-bg ${offLineData}`}>
+    <div className={`container-fluid my-4 custom-bg-fill ${offLineData}`}>
       <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
         {Object.values(localGroup.data)
           .sort((a, b) => a.coordinator.roomName.localeCompare(b.coordinator.roomName))

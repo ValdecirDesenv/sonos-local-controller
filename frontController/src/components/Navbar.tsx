@@ -1,7 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useWebSocketContext } from "../hooks/WebSocketProvider";
-import { useEffect, useState } from "react";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 interface Coordinator {
   roomName: string;
@@ -19,9 +18,7 @@ interface Group {
 }
 
 const Navbar: React.FC<{ group?: Group }> = ({ group }) => {
-  const [devices, setDevices] = useState<{ uuid: string; roomName: string }[]>(
-    []
-  );
+  const [devices, setDevices] = useState<{ uuid: string; roomName: string }[]>([]);
 
   useEffect(() => {
     if (group?.devices) {
@@ -46,8 +43,8 @@ const Navbar: React.FC<{ group?: Group }> = ({ group }) => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/settings">
-              Settings
+            <Link className="nav-link" to="/spotifyWeekList">
+              Play List Settings
             </Link>
             {group && (
               <ul className="nav flex-column">
@@ -55,10 +52,7 @@ const Navbar: React.FC<{ group?: Group }> = ({ group }) => {
                   .sort((a, b) => a.roomName.localeCompare(b.roomName))
                   .map((device, index) => (
                     <li className="listDevices" key={index}>
-                      <Link
-                        to={`/devices/${device.roomName}`}
-                        className="listDevices"
-                      >
+                      <Link to={`/devices/${device.roomName}`} className="listDevices">
                         {device.roomName}
                       </Link>
                     </li>

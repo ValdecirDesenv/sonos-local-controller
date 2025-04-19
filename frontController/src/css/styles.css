@@ -1,10 +1,19 @@
-body {
+/* body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+} */
+html,
+body {
+  height: 100%;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 .app-container {
   display: flex;
   flex-direction: column;
@@ -39,7 +48,15 @@ h2 {
 p {
   color: #555;
 }
+.custom-card {
+  background-color: rgb(53, 87, 86) !important;
+  border: 1px solid #1b693f;
+}
 
+.custom-text-1 {
+  color: #ffffff;
+  font-family: 'Helvetica Neue', sans-serif;
+}
 .card.custom-bg-onLineCard {
   background-color: rgb(53, 87, 86) !important;
 }
@@ -58,6 +75,9 @@ p {
 }
 .custom-bg-4 {
   --bs-body-bg: #b9b6b4 !important;
+}
+.custom-bg-5 {
+  --bs-body-bg: #bababa !important;
 }
 
 .custom-bg-offline {
@@ -81,6 +101,29 @@ p {
 }
 .custom-text-3 {
   font-size: 0.8rem;
+}
+
+.custom-text-4 {
+  font-size: 2.8rem;
+  color: azure;
+  font-weight: bold;
+}
+
+.custom-text-5 {
+  font-size: 1.8rem;
+  color: azure;
+  font-weight: bold;
+}
+
+.custom-bg-fill {
+  min-height: 100vh;
+  padding-bottom: 300px; /* Adjust based on what feels right */
+  background-color: rgb(77, 135, 134); /* Same as .custom-bg */
+}
+.custom-bg-fill::after {
+  content: '';
+  display: block;
+  height: 300px;
 }
 .card {
   background-color: #5a3d31;
@@ -126,7 +169,7 @@ td {
   font-size: 80%;
 }
 .scaled-background {
-  background-image: url("/group-R5.svg");
+  background-image: url('/group-R5.svg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -142,4 +185,10 @@ td {
   font-size: 0.7rem;
 }
 
-/* --bs-gutter-x:2.5rem */
+.custom-flex-grow {
+  background-color: #589696 !important;
+  padding-bottom: 500px !important;
+}
+.form-select-custom {
+  width: 13% !important;
+}
