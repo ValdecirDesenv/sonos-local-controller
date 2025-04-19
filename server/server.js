@@ -107,7 +107,7 @@ function getFilteredData(dataToSend) {
     hasTimePlay: zone.hasTimePlay ?? true,
     timeStart: zone.timeStart ?? defaultStartTime,
     timeStop: zone.timeStop ?? defaultStopTime,
-    keepPlaying: zone.keepPlaying ?? false,
+    isKeepPlaying: zone.isKeepPlaying ?? false,
     isInTimeFrameToPlay: zone.isInTimeFrameToPlay ?? false,
   }));
   return resultFiltereData;
@@ -130,7 +130,7 @@ function updateDeviceState() {
       hasTimePlay: historicalDevices[uuid]?.hasTimePlay ?? true,
       timeStart: historicalDevices[uuid]?.timeStart ?? defaultStartTime,
       timeStop: historicalDevices[uuid]?.timeStop ?? defaultStopTime,
-      keepPlaying: historicalDevices[uuid]?.keepPlaying ?? false,
+      isKeepPlaying: historicalDevices[uuid]?.isKeepPlaying ?? false,
       isInTimeFrameToPlay: historicalDevices[uuid]?.isInTimeFrameToPlay ?? false,
       members: members.map((member) => ({
         roomName: member.roomName,
@@ -206,7 +206,7 @@ discovery.on('topology-change', () => {
 setInterval(async () => {
   for (const deviceKey of Object.keys(historicalDevices)) {
     const device = historicalDevices[deviceKey];
-    const { uuid, name, playbackState, keepPlaying, hasTimePlay } = device;
+    const { uuid, name, playbackState, isKeepPlaying, hasTimePlay } = device;
     const triggerEventTime = device?.triggerEventTime ?? false;
     historicalDevices[deviceKey].triggerEventTime = triggerEventTime;
     const isInTimeRangeToPlay = getInTimeFrameToPlay(device);
@@ -222,8 +222,8 @@ setInterval(async () => {
       }
     }
 
-    const shouldPlay = keepPlaying || (playbackState !== 'PLAYING' && isInTimeRangeToPlay && hasTimePlay);
-    const shouldPause = !keepPlaying && hasTimePlay && !isInTimeRangeToPlay && playbackState === 'PLAYING';
+    const shouldPlay = isKeepPlaying || (playbackState !== 'PLAYING' && isInTimeRangeToPlay && hasTimePlay);
+    const shouldPause = !isKeepPlaying && hasTimePlay && !isInTimeRangeToPlay && playbackState === 'PLAYING';
 
     if (shouldPlay) {
       await changeStatusDevice(device, 'play');
@@ -275,8 +275,8 @@ wss.on('connection', (ws, req) => {
 
         case 'keepPlayerUpdate':
           if (isKeepPlaying !== undefined) {
-            historicalDevices[uuid].keepPlaying = isKeepPlaying;
-            //console.log(`Updated keepPlaying setting for ${historicalDevices[uuid].name}: keepPlaying=${historicalDevices[uuid].keepPlaying}`);
+            historicalDevices[uuid].isKeepPlaying = isKeepPlaying;
+            //console.log(`Updated isKeepPlaying setting for ${historicalDevices[uuid].name}: isKeepPlaying=${historicalDevices[uuid].isKeepPlaying}`);
           }
           break;
 
@@ -303,11 +303,13 @@ wss.on('connection', (ws, req) => {
 });
 
 function broadcastUpdate() {
+  // !(discovery.zones && Array.isArray(discovery.zones) && discovery.zones.length > 0);
   payload.data = getFilteredData({
     zones: Object.values(historicalDevices),
-    offLineData: discovery.zones.length === 0,
+    offLineData: !Array.isArray(discovery.zones) || discovery.zones.length === 0,
   });
   payload.type = 'update';
+  payload.offLineData = !Array.isArray(discovery.zones) || discovery.zones.length === 0;
   payload.devices = Object.values(historicalDevices).map((zone) => ({
     uuid: zone.uuid,
     roomName: zone.name,

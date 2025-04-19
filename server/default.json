@@ -116,7 +116,7 @@
     "name": "Dome5",
     "uuid": "RINCON_C43875546F7401400",
     "playbackState": "PLAYING",
-    "volume": 0,
+    "volume": 36,
     "mute": false,
     "triggerEventTime": false,
     "hasTimePlay": true,
@@ -129,12 +129,13 @@
         "roomName": "Dome5",
         "state": {
           "playbackState": "PLAYING",
-          "volume": 0,
+          "volume": 36,
           "mute": false
         }
       }
     ],
-    "connectionStatus": "online"
+    "connectionStatus": "online",
+    "isKeepPlaying": true
   },
   "RINCON_C43875810C1A01400": {
     "connectionStatus": "offline",
@@ -145,7 +146,7 @@
     "mute": false,
     "hasTimePlay": true,
     "timeStart": "06:00",
-    "timeStop": "23:00",
+    "timeStop": "09:00",
     "keepPlaying": false,
     "isInTimeFrameToPlay": true,
     "members": [
@@ -158,6 +159,7 @@
         }
       }
     ],
-    "triggerEventTime": false
+    "triggerEventTime": false,
+    "isKeepPlaying": false
   }
 }
