@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import SpotifyLoginButton from './SpotifyLoginButton';
 
 interface Coordinator {
   roomName: string;
@@ -33,6 +34,8 @@ const Navbar: React.FC<{ group?: Group }> = ({ group }) => {
   return (
     <nav className="nav flex-column">
       <div className="container">
+        <SpotifyLoginButton />
+        <p />
         <Link className="navbar-brand" to="/">
           Sonos upcoming settings
         </Link>

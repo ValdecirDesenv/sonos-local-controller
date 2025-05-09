@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import GroupDetails from './components/GroupDetails';
 import SpotifyWeekList from './pages/SpotifyWeekList';
 import './css/styles.css';
+import SpotifyLoginButton from './components/SpotifyLoginButton';
 
 const App: React.FC = () => {
   const [groups, setGroups] = useState(null);

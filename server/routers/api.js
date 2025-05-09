@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
+const spotifyRoutes = require('./spotifyRoutes');
+
+router.use('/spotify', spotifyRoutes);
+
 // Example API route
 router.get('/data', (req, res) => {
   res.json({ message: 'API data response' });

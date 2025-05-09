@@ -27,8 +27,15 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       ws.onmessage = (event) => {
         console.log('WebSocket message received:');
         try {
+          debugger;
           const payload = JSON.parse(event.data);
           console.log('Parsed payload:', payload);
+
+          if (payload.type === 'spotifyAuthUrl') {
+            // Redirect the user to Spotify's login page
+            window.location.href = payload.url;
+            return;
+          }
 
           if (payload.toggleStates) {
             console.log('Updating toggleStates:');

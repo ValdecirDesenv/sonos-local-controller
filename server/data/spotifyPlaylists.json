@@ -1,0 +1,37 @@
+{
+  "Monday": {
+    "url": "https://open.spotify.com/playlist/3jrMLNdV14UAtKTt6q9djU",
+    "image": "https://mosaic.scdn.co/640/ab67616d00001e02338ef055d7501cf241e7437eab67616d00001e025491e85a66233fb508f02fa0ab67616d00001e02632b907273dba6a6062fb780ab67616d00001e02bb05d6a2671766e6e633a131",
+    "name": "Office Classic Rock"
+  },
+  "Tuesday": {
+    "id": "0tW195nYJNp7O6Lfy9ANVw",
+    "name": "Jazz Baby Jazz",
+    "image": "https://mosaic.scdn.co/640/ab67616d00001e0211c6d9b2fe115ddd10ad6181ab67616d00001e0232458fbd27546d25fb27bc44ab67616d00001e0274ee9b4f0958b872159b9b82ab67616d00001e02aca693379ab1a76a5fbac026",
+    "url": "https://open.spotify.com/playlist/0tW195nYJNp7O6Lfy9ANVw"
+  },
+  "Wednesday": {
+    "id": "5F9ddZnfk07XIgoavownCO",
+    "name": "Michael Buble's greatest hits",
+    "image": "https://mosaic.scdn.co/640/ab67616d00001e02576629f3c4631eb55612a7c7ab67616d00001e025d7d966732bd44ac2a13b614ab67616d00001e02b59886e766636d1ae10fe7b3ab67616d00001e02f0cc194252888c6658c706ab",
+    "url": "https://open.spotify.com/playlist/5F9ddZnfk07XIgoavownCO"
+  },
+  "Thursday": {
+    "id": "1d6m8mtQzx9TJTFXGvZdo8",
+    "name": "In Time: The Best Of R.E.M. 1988-2003",
+    "image": "https://i.scdn.co/image/ab67616d00001e02519038856cb5329dc27f5916",
+    "url": "https://open.spotify.com/playlist/1d6m8mtQzx9TJTFXGvZdo8"
+  },
+  "Friday": {
+    "id": "73sIU7MIIIrSh664eygyjm",
+    "name": "Soul Classics - The Greatest Soul Songs",
+    "image": "https://image-cdn-fa.spotifycdn.com/image/ab67706c0000d72ca1f8d037fa9fcd9a158114b5",
+    "url": "https://open.spotify.com/playlist/73sIU7MIIIrSh664eygyjm"
+  },
+  "Saturday": {
+    "id": "5WDovCw5EQ81yGkUgy2cuB",
+    "name": "This Is Stromae (2)",
+    "image": "https://mosaic.scdn.co/640/ab67616d00001e02183fc5de03ccc82fb1154774ab67616d00001e022aab4ea84f431ad7d92fecbbab67616d00001e02ab580fab750cc9baf0d52b5cab67616d00001e02ae373174b14e3eac81554402",
+    "url": "https://open.spotify.com/playlist/5WDovCw5EQ81yGkUgy2cuB"
+  }
+}
