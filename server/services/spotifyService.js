@@ -9,10 +9,6 @@ const result = dotenv.config({ path: path.join(__dirname, '.env') });
 
 const clientId = process.env.SPOTIFY_CLIENT_ID;
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
-console.log('Loaded env:', {
-  SPOTIFY_CLIENT_ID: process.env.SPOTIFY_CLIENT_ID,
-  SPOTIFY_CLIENT_SECRET: process.env.SPOTIFY_CLIENT_SECRET,
-});
 
 function loadTokens() {
   const filePath = path.join(__dirname, '..', 'data', 'spotifyToken.json');
