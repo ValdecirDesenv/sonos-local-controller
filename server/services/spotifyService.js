@@ -2,27 +2,56 @@ const axios = require('axios');
 const fs = require('fs');
 const querystring = require('querystring');
 const path = require('path');
-const { setToken, getToken } = require('../services/tokenStore');
+let tokenMemory = null;
+
 const dotenv = require('dotenv');
+dotenv.config({ path: path.join(__dirname, '.env') });
 
-const result = dotenv.config({ path: path.join(__dirname, '.env') });
-
-const clientId = process.env.SPOTIFY_CLIENT_ID;
-const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
-
-function loadTokens() {
-  const filePath = path.join(__dirname, '..', 'data', 'spotifyToken.json');
-  if (fs.existsSync(filePath)) {
-    const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-    return data;
-  }
-  return null;
+function setToken(token) {
+  tokenMemory = token;
 }
 
-async function refreshSpotifyToken() {
-  const tokens = loadTokens();
-  if (!tokens || !tokens.refresh_token) {
-    throw new Error('No refresh token available');
+function getToken() {
+  return tokenMemory;
+}
+const clientId = process.env.SPOTIFY_CLIENT_ID;
+const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+const tokenFilePath = path.join(__dirname, '..', 'data', 'spotifyToken.json');
+
+// Load token from file on server startup
+async function initializeToken() {
+  tokenMemory = await readSavedSpotifyToken();
+  if (tokenMemory) {
+    setToken(tokenMemory); // Use the refreshed token for your watchdog task
+  } else {
+    console.error('Failed to retrieve a valid token');
+  }
+}
+
+initializeToken().catch((err) => {
+  console.error('Error during token initialization:', err.message);
+});
+
+function readSavedSpotifyToken() {
+  if (!fs.existsSync(tokenFilePath)) return null;
+
+  try {
+    const raw = fs.readFileSync(tokenFilePath, 'utf-8');
+    return JSON.parse(raw);
+  } catch (err) {
+    console.error('Error reading Spotify token:', err.message);
+    return null;
+  }
+}
+
+function loadTokens() {
+  // Prefer memory token if available
+  return getToken() || readSavedSpotifyToken();
+}
+
+async function refreshSpotifyToken(token) {
+  if (!token) {
+    token = loadTokens();
   }
 
   try {
@@ -30,7 +59,7 @@ async function refreshSpotifyToken() {
       'https://accounts.spotify.com/api/token',
       querystring.stringify({
         grant_type: 'refresh_token',
-        refresh_token: tokens.refresh_token,
+        refresh_token: token.refresh_token,
       }),
       {
         headers: {
@@ -40,21 +69,18 @@ async function refreshSpotifyToken() {
       }
     );
 
-    const { access_token, expires_in } = res.data;
+    const { access_token, expires_in, refresh_token: new_refresh_token } = res.data;
 
     const tokenData = {
       access_token,
-      refresh_token: tokens.refresh_token, // keep the same refresh token
+      refresh_token: new_refresh_token || token.refresh_token, // Spotify may not return a new one
       expires_in,
       fetched_at: new Date().toISOString(),
     };
 
-    const savePath = path.join(__dirname, '..', 'data', 'spotifyToken.json');
-    fs.writeFileSync(savePath, JSON.stringify(tokenData, null, 2));
-
-    console.log('New Spotify tokens saved to:', savePath);
-
+    fs.writeFileSync(tokenFilePath, JSON.stringify(tokenData, null, 2));
     setToken(tokenData);
+    console.log('New Spotify token saved and updated in memory.');
 
     return tokenData;
   } catch (err) {
@@ -63,114 +89,80 @@ async function refreshSpotifyToken() {
   }
 }
 
-function isTokenExpired() {
-  const token = getToken();
+function isTokenExpired(token = null) {
   if (!token) {
-    console.warn('No token found. Assuming token is expired.');
-    return true;
+    token = loadTokens();
   }
-
   const { expires_in, fetched_at } = token;
-
   const fetchedTime = new Date(fetched_at).getTime();
   const expirationTime = fetchedTime + expires_in * 1000;
-
-  console.log('Fetched at (UTC):', new Date(fetchedTime).toISOString());
-  console.log('Expires at (UTC):', new Date(expirationTime).toISOString());
-  console.log(
-    'Expires at (Local):',
-    new Date(expirationTime).toLocaleString('en-GB', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-    })
-  );
-
-  const isExpired = Date.now() >= expirationTime;
-  console.log('Is token expired?', isExpired);
-
-  return isExpired;
+  const expirationDate = new Date(expirationTime);
+  const formattedDate = expirationDate.toLocaleString('en-GB', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+  console.log('Token expiration time:', formattedDate);
+  return token;
 }
 
-async function ensureValidSpotifyToken(ws) {
-  const isExpired = isTokenExpired();
-  if (isExpired) {
+async function ensureValidSpotifyToken(ws = null, token = null) {
+  if (isTokenExpired(token)) {
     try {
-      token = await refreshSpotifyToken();
-      console.log('Spotify token refreshed.');
-      return true;
+      const token = await refreshSpotifyToken();
+      return token;
     } catch (err) {
       console.error('Failed to refresh token:', err.message);
-      if (ws && ws.send) {
+      if (ws?.send) {
         ws.send(
           JSON.stringify({
             type: 'error',
-            message: 'Spotify token is expired and could not be refreshed. Please log in again.',
+            message: 'Spotify token expired and could not be refreshed. Please log in again.',
           })
         );
       }
-      return false;
+      return null;
     }
   }
-  return true;
+
+  return loadTokens();
 }
 
-function readSavedSpotifyToken() {
-  const tokenPath = path.join(__dirname, '..', 'data', 'spotifyToken.json');
-  if (!fs.existsSync(tokenPath)) return null;
+async function getClientCredentialsToken() {
+  const res = await axios.post('https://accounts.spotify.com/api/token', new URLSearchParams({ grant_type: 'client_credentials' }), {
+    headers: {
+      Authorization: 'Basic ' + Buffer.from(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`).toString('base64'),
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
 
+  return res.data.access_token;
+}
+
+async function getPublicPlaylistMetadata(playlistId) {
+  const token = await getClientCredentialsToken();
   try {
-    const raw = fs.readFileSync(tokenPath, 'utf-8');
-    const data = JSON.parse(raw);
-    return data;
+    const res = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const { name, images, external_urls } = res.data;
+
+    return {
+      id: playlistId,
+      name,
+      image: images?.[0]?.url || '',
+      url: external_urls?.spotify || '',
+    };
   } catch (err) {
-    console.error('Error reading Spotify token:', err.message);
+    console.error('Error fetching playlist:', err.response?.data || err.message);
     return null;
   }
 }
-
-// // Function to get playlist metadata
-// async function getPlaylistMeta(playlistId) {
-//   try {
-//     // Ensure the token is valid
-//     const isValid = await ensureValidSpotifyToken();
-//     if (!isValid) throw new Error('Failed to ensure a valid Spotify token');
-
-//     // Get the valid token
-//     const token = getToken();
-//     if (!token) throw new Error('No valid Spotify token found');
-
-//     // Make the API request
-//     const res = await axios.get(`${playlistId}`, {
-//       headers: {
-//         Authorization: `Bearer ${token.access_token}`,
-//       },
-//     });
-
-//     const html = res.data;
-//     const nameMatch = html.match(/<title>(.*?) - playlist by/);
-//     const name = nameMatch ? nameMatch[1] : 'Unknown';
-
-//     const imageMatch = html.match(/<link rel="icon" sizes="32x32" type="image\/png" href="(.*?)"/);
-//     const images = imageMatch ? [{ url: imageMatch[1] }] : [];
-
-//     const externalUrlMatch = html.match(/<meta property="og:url" content="(.*?)"/);
-//     const external_urls = { spotify: externalUrlMatch ? externalUrlMatch[1] : '' };
-
-//     return {
-//       id: playlistId,
-//       name,
-//       image: images?.[0]?.url || '',
-//       url: external_urls?.spotify || '',
-//     };
-//   } catch (err) {
-//     console.error(`Failed to fetch playlist ${playlistId}:`, err.message);
-//     return null;
-//   }
-// }
 
 async function getPlaylistFromAPI(playlistId, token) {
   try {
@@ -232,11 +224,13 @@ async function getPlaylistMeta(playlistIdOrUrl) {
   }
 
   try {
-    await ensureValidSpotifyToken();
     const token = getToken();
+    await ensureValidSpotifyToken(null, token);
     if (!token) throw new Error('No valid Spotify token');
 
-    const apiResult = await getPlaylistFromAPI(playlistId, token);
+    //const apiResult = await getPlaylistFromAPI(playlistId, token);
+    const apiResult = await getPublicPlaylistMetadata(playlistId, token);
+
     if (apiResult) return apiResult;
 
     return await getPlaylistFromHTML(`https://open.spotify.com/playlist/${playlistId}`);
@@ -245,4 +239,4 @@ async function getPlaylistMeta(playlistIdOrUrl) {
     return null;
   }
 }
-module.exports = { getPlaylistMeta, refreshSpotifyToken, readSavedSpotifyToken, isTokenExpired, ensureValidSpotifyToken };
+module.exports = { getPublicPlaylistMetadata, loadTokens, ensureValidSpotifyToken, refreshSpotifyToken, readSavedSpotifyToken, isTokenExpired, getPlaylistMeta, setToken, getToken };

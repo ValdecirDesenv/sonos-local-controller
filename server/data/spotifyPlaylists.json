@@ -29,9 +29,15 @@
     "url": "https://open.spotify.com/playlist/73sIU7MIIIrSh664eygyjm"
   },
   "Saturday": {
-    "id": "5WDovCw5EQ81yGkUgy2cuB",
-    "name": "This Is Stromae (2)",
-    "image": "https://mosaic.scdn.co/640/ab67616d00001e02183fc5de03ccc82fb1154774ab67616d00001e022aab4ea84f431ad7d92fecbbab67616d00001e02ab580fab750cc9baf0d52b5cab67616d00001e02ae373174b14e3eac81554402",
-    "url": "https://open.spotify.com/playlist/5WDovCw5EQ81yGkUgy2cuB"
+    "id": "37i9dQZF1DZ06evO37wTNS",
+    "name": "Ma Meilleure Ennemie (from the series Arcane League of Legends)",
+    "image": "https://i.scdn.co/image/ab67616d0000b2732aab4ea84f431ad7d92fecbb",
+    "url": "https://open.spotify.com/playlist/37i9dQZF1DZ06evO37wTNS"
+  },
+  "Sunday": {
+    "id": "457OtnN2oj1cndaYV1o4R0",
+    "name": "Hot Hits Canada (2)",
+    "image": "https://mosaic.scdn.co/640/ab67616d00001e02000bd02e24b42b372007a785ab67616d00001e02245aa43805ea59914d8f59eeab67616d00001e028887b5e2d0247d6d84042c55ab67616d00001e02fcd90db6eb97508ab08000ae",
+    "url": "https://open.spotify.com/playlist/457OtnN2oj1cndaYV1o4R0"
   }
 }

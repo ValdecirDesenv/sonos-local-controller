@@ -65,7 +65,7 @@ const SpotifyWeekList = () => {
         {days.map((d) => {
           const playlist = playlistByDay[d] || {};
           const hasPlaylist = playlist.url && playlist.url.trim() !== '';
-
+          debugger;
           return (
             <Col md="4" className="mb-4" key={d}>
               <Card className={`custom-card text-center ${d === today ? 'border-success border-3' : ''}`}>

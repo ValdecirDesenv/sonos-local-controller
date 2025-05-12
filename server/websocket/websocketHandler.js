@@ -2,18 +2,14 @@ const url = require('url');
 const fs = require('fs');
 const path = require('path');
 const { getFilteredData, getDevices, saveHistoricalDevices, setDevice } = require('../services/deviceService');
-const { getPlaylistMeta, readSavedSpotifyToken, ensureValidSpotifyToken } = require('../services/spotifyService');
+const { getPlaylistMeta, ensureValidSpotifyToken } = require('../services/spotifyService');
 const { triggerSpotifyStartPlayListDesktop } = require('../services/spotifyTriggers');
-const { setToken, getToken } = require('../services/tokenStore');
-
-const tokenFilePath = path.join(__dirname, '../data/spotifyToken.json');
+const { getToken } = require('../services/spotifyService');
 const dataFilePath = path.join(__dirname, '../data/spotifyPlaylists.json');
 
-setToken(readSavedSpotifyToken());
-
 let token = getToken();
-
 let spotifyCache = {};
+
 try {
   const data = fs.readFileSync(dataFilePath, 'utf8');
   spotifyCache = JSON.parse(data);
@@ -23,11 +19,6 @@ try {
 }
 
 async function fetchWithRetry(uri, retries = 1, delay = 1000) {
-  // const playlistId = uri.replace(/https:\/\/open\.spotify\.com\/(album|playlist)\//, '').split('?')[0];
-  // console.log('Fetching playlist ID:', playlistId);
-  // if (!playlistId) {
-  //   throw new Error('Invalid playlist URI');
-  // }
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       const playlistMeta = await getPlaylistMeta(uri);
@@ -83,14 +74,18 @@ function setupWebSocket(wss, discovery) {
             ws.send(JSON.stringify({ type: 'error', message: `No playlist found for ${day}` }));
             return;
           }
-
-          const isValid = await ensureValidSpotifyToken(ws);
+          token = getToken();
+          const isValid = await ensureValidSpotifyToken(ws, token);
           if (!isValid) return;
-
           try {
             const result = await triggerSpotifyStartPlayListDesktop(playlistUrl, token.access_token);
 
             if (result.success) {
+              if (spotifyCache[day].name === 'unknown' || spotifyCache[day].image.startsWith('https://open.spotifycdn.com')) {
+                spotifyCache[day].name = result.track.name;
+                spotifyCache[day].image = result.track.image;
+                fs.writeFileSync(dataFilePath, JSON.stringify(spotifyCache, null, 2), 'utf8');
+              }
               console.log(`Started playlist for ${day}`);
               //ws.send(JSON.stringify({ type: 'success', message: result.message }));
             } else {
@@ -104,7 +99,9 @@ function setupWebSocket(wss, discovery) {
             //ws.send(JSON.stringify({ type: 'error', message: 'An unexpected error occurred while starting the playlist.' }));
           }
         } else if (type === 'spotifyLogin') {
+          // TODO: STILL NEED TO CHECK HOW THIS WILL WORKS HERE
           //const isValid = await ensureValidSpotifyToken(ws);
+          token = getToken();
           const isValid = false;
           if (isValid) {
             ws.send(JSON.stringify({ type: 'spotifyToken', token: token.access_token }));
