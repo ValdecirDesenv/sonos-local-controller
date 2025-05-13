@@ -59,7 +59,7 @@ setInterval(async () => {
 const refreshTokenIfneeded = async () => {
   const token = (await isTokenExpired(getToken())) ? await refreshSpotifyToken() : getToken();
   if (token) {
-    runWatchdog(token, '05:45'); // Use the refreshed token for your watchdog task
+    runWatchdog(token.access_token, '05:45'); // Use the refreshed token for your watchdog task
   } else {
     console.error('Failed to retrieve a valid token');
   }
