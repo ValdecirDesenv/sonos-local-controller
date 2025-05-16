@@ -2,7 +2,7 @@ const url = require('url');
 const fs = require('fs');
 const path = require('path');
 const { getFilteredData, getDevices, saveHistoricalDevices, setDevice } = require('../services/deviceService');
-const { getPlaylistMeta, ensureValidSpotifyToken } = require('../services/spotifyService');
+const { getPlaylistMeta, isTokenExpired, ensureValidSpotifyToken } = require('../services/spotifyService');
 const { triggerSpotifyStartPlayListDesktop } = require('../services/spotifyTriggers');
 const { getToken } = require('../services/spotifyService');
 const dataFilePath = path.join(__dirname, '../data/spotifyPlaylists.json');
@@ -74,9 +74,9 @@ function setupWebSocket(wss, discovery) {
             ws.send(JSON.stringify({ type: 'error', message: `No playlist found for ${day}` }));
             return;
           }
-          token = getToken();
-          const isValid = await ensureValidSpotifyToken(ws, token);
-          if (!isValid) return;
+          // token = getToken();
+          token = await ensureValidSpotifyToken(ws, token);
+          if (!token) return;
           try {
             const result = await triggerSpotifyStartPlayListDesktop(playlistUrl, token.access_token);
 
@@ -101,12 +101,18 @@ function setupWebSocket(wss, discovery) {
         } else if (type === 'spotifyLogin') {
           // TODO: STILL NEED TO CHECK HOW THIS WILL WORKS HERE
           //const isValid = await ensureValidSpotifyToken(ws);
-          token = getToken();
-          const isValid = false;
-          if (isValid) {
-            ws.send(JSON.stringify({ type: 'spotifyToken', token: token.access_token }));
+          token = await ensureValidSpotifyToken(ws, token);
+          if (!isTokenExpired(token)) {
+            //ws.send(JSON.stringify({ type: 'spotifyToken', token: token.access_token }));
+            ws.send(JSON.stringify({ type: 'success', message: 'Spotify token is valid.' }));
           } else {
-            ws.send(JSON.stringify({ type: 'spotifyAuthUrl', url: 'http://127.0.0.1:3000/spotify/login' }));
+            ws.send(
+              JSON.stringify({
+                type: 'spotifyAuthUrl',
+                url: 'http://127.0.0.1:3000/spotify/login',
+                openInNewTab: true,
+              })
+            );
           }
         }
 

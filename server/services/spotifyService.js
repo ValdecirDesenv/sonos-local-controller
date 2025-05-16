@@ -93,9 +93,16 @@ function isTokenExpired(token = null) {
   if (!token) {
     token = loadTokens();
   }
+  if (!token) {
+    console.error('No token available to check expiration.');
+    return true; // If no token is available, consider it expired
+  }
+
   const { expires_in, fetched_at } = token;
   const fetchedTime = new Date(fetched_at).getTime();
   const expirationTime = fetchedTime + expires_in * 1000;
+  const currentTime = Date.now();
+
   const expirationDate = new Date(expirationTime);
   const formattedDate = expirationDate.toLocaleString('en-GB', {
     day: '2-digit',
@@ -105,7 +112,8 @@ function isTokenExpired(token = null) {
     minute: '2-digit',
   });
   console.log('Token expiration time:', formattedDate);
-  return token;
+
+  return currentTime >= expirationTime; // Return true if token is expired
 }
 
 async function ensureValidSpotifyToken(ws = null, token = null) {

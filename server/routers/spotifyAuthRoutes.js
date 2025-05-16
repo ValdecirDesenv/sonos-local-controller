@@ -47,8 +47,8 @@ router.get('/callback', async (req, res) => {
 
     fs.writeFileSync(tokenFilePath, JSON.stringify(tokenData, null, 2));
     setToken(tokenData);
-
-    res.send('Authorization successful. You can close this tab.');
+    console.log('Token renewed and saved successfully:');
+    //res.send('Authorization successful. You can close this tab.');
   } catch (err) {
     console.error('Token exchange failed:', err.response?.data || err.message);
     res.status(500).send('Error exchanging code for token.');
