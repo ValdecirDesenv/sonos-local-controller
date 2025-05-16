@@ -1,7 +1,7 @@
 const url = require('url');
 const fs = require('fs');
 const path = require('path');
-const { getFilteredData, getDevices, saveHistoricalDevices, setDevice } = require('../services/deviceService');
+const { getFilteredData, getDevices, saveHistoricalDevices, setDevice, removeDevice } = require('../services/deviceService');
 const { getPlaylistMeta, isTokenExpired, ensureValidSpotifyToken } = require('../services/spotifyService');
 const { triggerSpotifyStartPlayListDesktop } = require('../services/spotifyTriggers');
 const { getToken } = require('../services/spotifyService');
@@ -113,6 +113,12 @@ function setupWebSocket(wss, discovery) {
                 openInNewTab: true,
               })
             );
+          }
+        } else if (type === 'removeGroup') {
+          if (uuid) {
+            removeDevice(uuid);
+            saveHistoricalDevices();
+            broadcastUpdate(wss, discovery);
           }
         }
 

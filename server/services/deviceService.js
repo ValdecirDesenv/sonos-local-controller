@@ -105,7 +105,16 @@ const setDevice = (uuid, data) => {
   historicalDevices[uuid] = { ...historicalDevices[uuid], ...data };
 };
 
+const removeDevice = (uuid) => {
+  if (!uuid || !historicalDevices[uuid]) {
+    console.warn(`Cannot remove device: Invalid or non-existent UUID (${uuid})`);
+    return;
+  }
+  delete historicalDevices[uuid];
+};
+
 module.exports = {
+  removeDevice,
   getFilteredData,
   updateDeviceState,
   getDevices,

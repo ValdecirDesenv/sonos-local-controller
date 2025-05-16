@@ -113,158 +113,23 @@
     "isKeepPlaying": false
   },
   "RINCON_C43875546F7401400": {
+    "connectionStatus": "online",
     "name": "Dome5",
     "uuid": "RINCON_C43875546F7401400",
     "playbackState": "STOPPED",
     "volume": 35,
     "mute": false,
-    "triggerEventTime": false,
-    "hasTimePlay": true,
+    "hasTimePlay": false,
     "timeStart": "06:00",
-    "timeStop": "23:00",
-    "keepPlaying": false,
-    "isInTimeFrameToPlay": true,
+    "timeStop": "21:00",
+    "isKeepPlaying": false,
+    "isInTimeFrameToPlay": false,
     "members": [
       {
         "roomName": "Dome5",
         "state": {
           "playbackState": "STOPPED",
           "volume": 35,
-          "mute": false
-        }
-      }
-    ],
-    "connectionStatus": "offline",
-    "isKeepPlaying": true
-  },
-  "RINCON_C43875810C1A01400": {
-    "connectionStatus": "online",
-    "name": "Family Room",
-    "uuid": "RINCON_C43875810C1A01400",
-    "playbackState": "STOPPED",
-    "volume": 0,
-    "mute": false,
-    "hasTimePlay": true,
-    "timeStart": "06:00",
-    "timeStop": "09:00",
-    "keepPlaying": false,
-    "isInTimeFrameToPlay": true,
-    "members": [
-      {
-        "roomName": "Family Room",
-        "state": {
-          "playbackState": "STOPPED",
-          "volume": 0,
-          "mute": false
-        }
-      }
-    ],
-    "triggerEventTime": false,
-    "isKeepPlaying": false
-  },
-  "RINCON_804AF2A6E01301400": {
-    "connectionStatus": "offline",
-    "name": "Library",
-    "uuid": "RINCON_804AF2A6E01301400",
-    "playbackState": "PLAYING",
-    "volume": 0,
-    "mute": false,
-    "hasTimePlay": true,
-    "timeStart": "06:00",
-    "timeStop": "21:00",
-    "isKeepPlaying": false,
-    "isInTimeFrameToPlay": false,
-    "members": [
-      {
-        "roomName": "Library",
-        "state": {
-          "playbackState": "PLAYING",
-          "volume": 0,
-          "mute": false
-        }
-      }
-    ]
-  },
-  "RINCON_5CAAFDEB4F1201400": {
-    "connectionStatus": "offline",
-    "name": "TV3floor",
-    "uuid": "RINCON_5CAAFDEB4F1201400",
-    "playbackState": "PAUSED_PLAYBACK",
-    "volume": 0,
-    "mute": false,
-    "hasTimePlay": true,
-    "timeStart": "06:00",
-    "timeStop": "21:00",
-    "isKeepPlaying": false,
-    "isInTimeFrameToPlay": false,
-    "members": [
-      {
-        "roomName": "TV3floor",
-        "state": {
-          "playbackState": "PAUSED_PLAYBACK",
-          "volume": 0,
-          "mute": false
-        }
-      },
-      {
-        "roomName": "billiards",
-        "state": {
-          "playbackState": "PAUSED_PLAYBACK",
-          "volume": 0,
-          "mute": false
-        }
-      }
-    ]
-  },
-  "RINCON_949F3EB2F23E01400": {
-    "connectionStatus": "offline",
-    "name": "Dining Room",
-    "uuid": "RINCON_949F3EB2F23E01400",
-    "playbackState": "STOPPED",
-    "volume": 0,
-    "mute": false,
-    "hasTimePlay": true,
-    "timeStart": "06:00",
-    "timeStop": "21:00",
-    "isKeepPlaying": false,
-    "isInTimeFrameToPlay": false,
-    "members": [
-      {
-        "roomName": "Kitchen",
-        "state": {
-          "playbackState": "STOPPED",
-          "volume": 0,
-          "mute": false
-        }
-      },
-      {
-        "roomName": "Dining Room",
-        "state": {
-          "playbackState": "STOPPED",
-          "volume": 0,
-          "mute": false
-        }
-      }
-    ]
-  },
-  "RINCON_949F3EB3552A01400": {
-    "connectionStatus": "offline",
-    "name": "Living Room",
-    "uuid": "RINCON_949F3EB3552A01400",
-    "playbackState": "STOPPED",
-    "volume": 0,
-    "mute": false,
-    "hasTimePlay": true,
-    "timeStart": "06:00",
-    "timeStop": "21:00",
-    "isKeepPlaying": false,
-    "isInTimeFrameToPlay": false,
-    "members": [
-      {
-        "roomName": "Living Room",
-        "state": {
-          "playbackState": "STOPPED",
-          "volume": 0,
           "mute": false
         }
       }
