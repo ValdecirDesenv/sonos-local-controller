@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 5
+    },
+    "auditLog": "/home/audiodevices/dev_audio/sonos-local-controller/.8bd1dea21a3be4698bf7c0f63ea63874dd28d589-audit.json",
+    "files": [
+        {
+            "date": 1756172670172,
+            "name": "/home/audiodevices/dev_audio/sonos-local-controller/serverSonos.log.2025-08-25",
+            "hash": "d1269530a39e63ccc96210c164b46c4df1387422516d9d51495432d8ea072443"
+        }
+    ],
+    "hashType": "sha256"
+}

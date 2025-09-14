@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardBody, Button, Input, Row, Col } from 'reactstrap';
 import '../css/styles.css';
-import { useWebSocketContext } from '../hooks/WebSocketProvider';
+import { useWebSocketContext } from '../hooks/WebSocketProvider.js';
 
 const SpotifyWeekList = () => {
   const { messages, sendMessage } = useWebSocketContext();
@@ -55,9 +55,7 @@ const SpotifyWeekList = () => {
         <Button color="primary" onClick={handleSave}>
           Save
         </Button>
-        <Button color="warning" onClick={handleUpdate}>
-          Update
-        </Button>
+ 
       </div>
 
       {/* Playlists Section */}

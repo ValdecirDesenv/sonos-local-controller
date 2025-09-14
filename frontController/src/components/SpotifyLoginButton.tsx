@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useWebSocketContext } from '../hooks/WebSocketProvider';
+import { useWebSocketContext } from '../hooks/WebSocketProvider.js';
 
 const SpotifyLoginButton: React.FC = () => {
   const { messages, sendMessage } = useWebSocketContext();

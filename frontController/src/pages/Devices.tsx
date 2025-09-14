@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useWebSocketContext } from "../hooks/WebSocketProvider";
-import GroupDetails from "../components/GroupDetails";
+import { useWebSocketContext } from "../hooks/WebSocketProvider.js";
+import GroupDetails from "../components/GroupDetails.js";
 import { Typography } from "@mui/material";
 import "../css/styles.css";
 

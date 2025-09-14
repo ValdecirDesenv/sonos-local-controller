@@ -1,6 +1,6 @@
 // Example usage in a component
 import React from "react";
-import { useWebSocketContext } from "../hooks/WebSocketProvider";
+import { useWebSocketContext } from "../hooks/WebSocketProvider.js";
 
 const Controls: React.FC = () => {
   const { sendMessage } = useWebSocketContext();

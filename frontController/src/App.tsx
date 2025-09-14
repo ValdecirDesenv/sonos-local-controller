@@ -1,15 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import NotFound from './pages/NotFound';
-import Navbar from './components/Navbar';
-import { WebSocketProvider, useWebSocketContext } from './hooks/WebSocketProvider';
-import Topbar from './components/Topbar';
+import Home from './pages/Home.js';
+import NotFound from './pages/NotFound.js';
+import Navbar from './components/Navbar.js';
+import { WebSocketProvider, useWebSocketContext } from './hooks/WebSocketProvider.js';
+import Topbar from './components/Topbar.js';
 import { useEffect, useState } from 'react';
-import GroupDetails from './components/GroupDetails';
-import SpotifyWeekList from './pages/SpotifyWeekList';
+import GroupDetails from './components/GroupDetails.jsx';
+import SpotifyWeekList from './pages/SpotifyWeekList.js';
 import './css/styles.css';
-import SpotifyLoginButton from './components/SpotifyLoginButton';
+import SpotifyLoginButton from './components/SpotifyLoginButton.js';
 
 const App: React.FC = () => {
   const [groups, setGroups] = useState(null);
