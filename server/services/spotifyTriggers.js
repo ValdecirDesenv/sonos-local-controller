@@ -68,8 +68,9 @@ async function triggerSpotifyStartPlayListDesktop(playlistInput, userToken) {
     };
   } catch (err) {
     const errorMessage = err.response?.data?.error?.message || err.message;
-    console.error('Failed to start playback or fetch metadata:', errorMessage);
-    return { success: false, message: errorMessage };
+    const errorTime = new Date().toISOString();
+    console.error(`[${errorTime}] Failed to start playback or fetch metadata:`, errorMessage);
+    return { success: false, message: errorMessage, time: errorTime };
   }
 }
 
