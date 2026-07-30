@@ -1,4 +1,3 @@
-const url = require('url');
 const fs = require('fs');
 const path = require('path');
 const { getFilteredData, getDevices, saveHistoricalDevices, setDevice, removeDevice } = require('../services/deviceService');
@@ -33,9 +32,9 @@ async function fetchWithRetry(uri, retries = 1, delay = 1000) {
 
 function setupWebSocket(wss, discovery) {
   wss.on('connection', (ws, req) => {
-    const { query } = url.parse(req.url, true);
+    const { searchParams } = new URL(req.url, `http://${req.headers.host}`);
     ws.id = Date.now();
-    ws.clientType = query.client || 'unknown';
+    ws.clientType = searchParams.get('client') || 'unknown';
 
     broadcastUpdate(wss, discovery);
 

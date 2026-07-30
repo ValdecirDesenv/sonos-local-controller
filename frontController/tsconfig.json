@@ -9,6 +9,8 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "baseUrl": "./src",
+    "ignoreDeprecations": "6.0",
+    "rootDir": "./src",
     "outDir": "./dist"
   },
   "include": ["src/**/*"],

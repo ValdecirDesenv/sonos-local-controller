@@ -1,0 +1,17 @@
+Install PM2 globally (if not already):
+    npm install -g pm2
+
+5. Start your server with PM2:
+    pm2 start server.js --name sonos-server
+
+6. Check PM2 status and logs:
+    pm2 status
+    pm2 logs sonos-server
+
+7. (Optional) Set PM2 to auto-start on boot:
+    pm2 startup
+    pm2 save
+
+8. (Optional) Restart or stop your server:
+    pm2 restart sonos-server
+    pm2 stop sonos-server

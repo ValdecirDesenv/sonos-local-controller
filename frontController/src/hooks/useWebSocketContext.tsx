@@ -18,8 +18,8 @@ const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }
 
   useEffect(() => {
     let ws: WebSocket;
-    let retryTimeout: NodeJS.Timeout;
-    let fetchInterval: NodeJS.Timeout;
+    let retryTimeout: ReturnType<typeof setTimeout>;
+    let fetchInterval: ReturnType<typeof setInterval>;
 
     const connectWebSocket = () => {
       ws = new WebSocket('ws://localhost:3000?client=sonosWhachdog');

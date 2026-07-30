@@ -12,7 +12,7 @@ import './css/styles.css';
 import SpotifyLoginButton from './components/SpotifyLoginButton.js';
 
 const App: React.FC = () => {
-  const [groups, setGroups] = useState(null);
+  const [groups, setGroups] = useState<any | undefined>(undefined);
   const { messages } = useWebSocketContext();
 
   useEffect(() => {

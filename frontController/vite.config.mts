@@ -8,6 +8,7 @@ export default defineConfig({
     sourcemap: true, // Generates source maps for debugging
   },
   server: {
+    host: "127.0.0.1",
     open: true, // Automatically opens the browser on startup
   },
 });

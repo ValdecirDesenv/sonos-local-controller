@@ -120,3 +120,5 @@ refreshTokenIfneeded(); // Refresh token on server startup
 
 const PORT = 3000;
 server.listen(PORT, () => logger.info(`Server running on http://127.0.0.1:${PORT}`));
+console.log(`Server running on http://127.0.0.1:${PORT}`);
+

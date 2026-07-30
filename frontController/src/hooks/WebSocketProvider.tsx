@@ -13,7 +13,8 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [messages, setMessages] = useState<any[]>([]);
   const [toggleStates, setToggleStates] = useState<{ [key: string]: boolean }>({});
   const socketRef = useRef<WebSocket | null>(null);
-  const retryTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  // In browser environments the timeout ID is a number, not NodeJS.Timeout
+  const retryTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     const connectWebSocket = () => {
@@ -54,10 +55,10 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
       ws.onclose = () => {
         console.warn('WebSocket connection closed. Retrying...');
-        if (retryTimeoutRef.current) {
+        if (retryTimeoutRef.current !== null) {
           clearTimeout(retryTimeoutRef.current);
         }
-        retryTimeoutRef.current = setTimeout(connectWebSocket, 3000); // Retry in 3 seconds
+        retryTimeoutRef.current = window.setTimeout(connectWebSocket, 3000); // Retry in 3 seconds
       };
     };
 
@@ -65,7 +66,9 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
     return () => {
       socketRef.current?.close();
-      clearTimeout(retryTimeoutRef.current);
+      if (retryTimeoutRef.current !== null) {
+        clearTimeout(retryTimeoutRef.current);
+      }
     };
   }, []);
 
