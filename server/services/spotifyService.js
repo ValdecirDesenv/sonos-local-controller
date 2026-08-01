@@ -203,10 +203,10 @@ async function getPlaylistFromHTML(playlistUrl) {
     const res = await axios.get(playlistUrl);
     const html = res.data;
 
-    const nameMatch = html.match(/<title>(.*?) - playlist by/);
+    const nameMatch = html.match(/<meta property="og:title" content="(.*?)"/);
     const name = nameMatch ? nameMatch[1].trim() : 'Unknown';
 
-    const imageMatch = html.match(/<link rel="icon" sizes="32x32" type="image\/png" href="(.*?)"/);
+    const imageMatch = html.match(/<meta property="og:image" content="(.*?)"/);
     const imageUrl = imageMatch ? imageMatch[1] : '';
 
     const urlMatch = html.match(/<meta property="og:url" content="(.*?)"/);

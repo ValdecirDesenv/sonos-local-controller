@@ -18,6 +18,26 @@ const saveHistoricalDevices = () => {
   fs.writeFileSync(historicalDevicesPath, JSON.stringify(historicalDevices, null, 2));
 };
 
+// Builds a sonos-discovery-compatible preset (see SonosSystem.prototype.applyPreset)
+// from a live discovery.zones entry, so it can be saved and later replayed to
+// force the group back into this exact shape.
+const buildGroupPreset = (zone) => {
+  const otherMembers = zone.members.filter((member) => member.uuid !== zone.coordinator.uuid);
+  const players = [zone.coordinator, ...otherMembers].map((player) => ({
+    uuid: player.uuid,
+    roomName: player.roomName,
+    volume: player.state?.volume,
+    mute: player.state?.mute,
+  }));
+
+  return {
+    players,
+    uri: zone.coordinator.avTransportUri || undefined,
+    metadata: zone.coordinator.avTransportUriMetadata || '',
+    state: 'playing',
+  };
+};
+
 const getFilteredData = (dataToSend) => {
   const resultFiltereData = dataToSend.zones.map((zone) => ({
     uuid: zone.uuid,
@@ -25,9 +45,9 @@ const getFilteredData = (dataToSend) => {
       roomName: zone?.coordinator?.roomName ?? zone.name,
       uuid: zone?.coordinator?.uuid ?? zone.uuid,
       state: {
-        playbackState: zone?.coordinator?.state?.playbackState,
-        volume: zone?.coordinator?.state?.volume,
-        mute: zone?.coordinator?.state?.mute,
+        playbackState: zone?.coordinator?.state?.playbackState ?? zone.playbackState,
+        volume: zone?.coordinator?.state?.volume ?? zone.volume,
+        mute: zone?.coordinator?.state?.mute ?? zone.mute,
       },
     },
     members:
@@ -44,9 +64,9 @@ const getFilteredData = (dataToSend) => {
             {
               roomName: zone?.coordinator?.roomName ?? zone.name,
               state: {
-                playbackState: zone?.coordinator?.state?.playbackState,
-                volume: zone?.coordinator?.state?.volume,
-                mute: zone?.coordinator?.state?.mute,
+                playbackState: zone?.coordinator?.state?.playbackState ?? zone.playbackState,
+                volume: zone?.coordinator?.state?.volume ?? zone.volume,
+                mute: zone?.coordinator?.state?.mute ?? zone.mute,
               },
             },
           ],
@@ -56,6 +76,9 @@ const getFilteredData = (dataToSend) => {
     timeStop: zone.timeStop ?? defaultStopTime,
     isKeepPlaying: zone.isKeepPlaying ?? false,
     isInTimeFrameToPlay: zone.isInTimeFrameToPlay ?? false,
+    autoRestoreGroupEnabled: zone.autoRestoreGroupEnabled ?? false,
+    hasDesiredGroupConfigured: Boolean(zone.desiredGroupPreset),
+    desiredGroupSavedAt: zone.desiredGroupSavedAt ?? null,
   }));
   return resultFiltereData;
 };
@@ -120,4 +143,5 @@ module.exports = {
   getDevices,
   setDevice,
   saveHistoricalDevices,
+  buildGroupPreset,
 };

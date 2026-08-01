@@ -32,6 +32,14 @@ const logger = winston.createLogger({
   transports: [transport],
 });
 
+process.on('uncaughtException', (err) => {
+  logger.error(`Uncaught Exception: ${err.stack || err.message}`);
+});
+
+process.on('unhandledRejection', (reason) => {
+  logger.error(`Unhandled Rejection: ${reason instanceof Error ? reason.stack : reason}`);
+});
+
 const sonosRoutes = require('./routers/sonosRoutes');
 const spotifyAuthRoutes = require('./routers/spotifyAuthRoutes');
 
@@ -41,6 +49,7 @@ const { changeGroupPlaybackStatus } = require('./lib/sonosController');
 const { getDevices } = require('./services/deviceService');
 const { getInTimeFrameToPlay } = require('./utils/timeUtils');
 const { runWatchdog } = require('./services/playlistWatchdog');
+const { initGroupRestoreWatchdog } = require('./services/groupRestoreWatchdog');
 const { refreshSpotifyToken, isTokenExpired, getToken,ensureValidSpotifyToken } = require('./services/spotifyService');
 const app = express();
 const server = http.createServer(app);
@@ -59,6 +68,8 @@ setupWebSocket(wss, discovery);
 discovery.on('transport-state', () => updateDeviceState(discovery));
 discovery.on('device-state-change', () => updateDeviceState(discovery));
 discovery.on('topology-change', () => updateDeviceState(discovery));
+
+initGroupRestoreWatchdog(discovery, logger);
 
 // Helper for resilient Sonos API calls
 async function resilientChangeGroupPlaybackStatus(device, action, retries = 3, delay = 1000) {

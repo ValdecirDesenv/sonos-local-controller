@@ -1,50 +1,21 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home.js';
-import NotFound from './pages/NotFound.js';
-import Navbar from './components/Navbar.js';
-import { WebSocketProvider, useWebSocketContext } from './hooks/WebSocketProvider.js';
-import Topbar from './components/Topbar.js';
-import { useEffect, useState } from 'react';
-import GroupDetails from './components/GroupDetails.jsx';
-import SpotifyWeekList from './pages/SpotifyWeekList.js';
-import './css/styles.css';
-import SpotifyLoginButton from './components/SpotifyLoginButton.js';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { AppShell } from './components/layout/AppShell.js';
+import { DevicesPage } from './pages/DevicesPage.js';
+import { HomePage } from './pages/HomePage.js';
+import { NotFoundPage } from './pages/NotFoundPage.js';
+import { SpotifyWeekListPage } from './pages/SpotifyWeekListPage.js';
 
-const App: React.FC = () => {
-  const [groups, setGroups] = useState<any | undefined>(undefined);
-  const { messages } = useWebSocketContext();
-
-  useEffect(() => {
-    if (messages?.length) {
-      setGroups(messages[0]);
-    } else {
-      console.warn('No valid data received from WebSocket:', messages);
-    }
-  }, [messages]);
-
+export function App() {
   return (
-    <WebSocketProvider>
-      <Router>
-        <Topbar />
-        <div className="d-flex">
-          <Navbar group={groups} />
-          <div className="flex-grow-1 custom-flex-grow">
-            {groups ? (
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/spotifyWeekList" element={<SpotifyWeekList />} />
-                <Route path="/devices" element={<GroupDetails group={groups} />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            ) : (
-              <div>Loading...</div>
-            )}
-          </div>
-        </div>
-      </Router>
-    </WebSocketProvider>
+    <Router>
+      <Routes>
+        <Route element={<AppShell />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/devices" element={<DevicesPage />} />
+          <Route path="/spotifyWeekList" element={<SpotifyWeekListPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </Router>
   );
-};
-
-export default App;
+}

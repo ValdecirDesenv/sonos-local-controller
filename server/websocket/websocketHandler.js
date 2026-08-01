@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { getFilteredData, getDevices, saveHistoricalDevices, setDevice, removeDevice } = require('../services/deviceService');
+const { getFilteredData, getDevices, saveHistoricalDevices, setDevice, removeDevice, buildGroupPreset } = require('../services/deviceService');
 const { getPlaylistMeta, isTokenExpired, ensureValidSpotifyToken } = require('../services/spotifyService');
 const { triggerSpotifyStartPlayListDesktop } = require('../services/spotifyTriggers');
 const { getToken } = require('../services/spotifyService');
@@ -41,7 +41,7 @@ function setupWebSocket(wss, discovery) {
     ws.on('message', async (message) => {
       try {
         const parsed = JSON.parse(message);
-        const { type, uuid, hasTimePlay, timeStart, timeStop, isKeepPlaying, data } = parsed;
+        const { type, uuid, hasTimePlay, timeStart, timeStop, isKeepPlaying, autoRestoreGroupEnabled, data } = parsed;
 
         if (type === 'spotifyPlaylist') {
           await sendSpotifyPlaylists(ws);
@@ -57,7 +57,7 @@ function setupWebSocket(wss, discovery) {
               data: spotifyCache,
             };
             wss.clients.forEach((client) => {
-              if (client.readyState === client.OPEN && client.clientType === 'spotifyPlaylist') {
+              if (client.readyState === client.OPEN && client.clientType === 'sonosWhachdog') {
                 client.send(JSON.stringify(update));
               }
             });
@@ -129,6 +129,20 @@ function setupWebSocket(wss, discovery) {
               setDevice(uuid, { hasTimePlay, timeStart, timeStop });
             } else if (type === 'keepPlayerUpdate') {
               setDevice(uuid, { isKeepPlaying });
+            } else if (type === 'saveDesiredGroup') {
+              const zone = discovery.zones?.find((z) => z.uuid === uuid);
+              if (!zone) {
+                ws.send(JSON.stringify({ type: 'error', message: `Group ${uuid} is not currently online — can't save its configuration.` }));
+              } else {
+                setDevice(uuid, { desiredGroupPreset: buildGroupPreset(zone), desiredGroupSavedAt: new Date().toISOString() });
+                ws.send(JSON.stringify({ type: 'success', message: `Saved current configuration for ${zone.coordinator.roomName}.` }));
+              }
+            } else if (type === 'setAutoRestoreGroup') {
+              if (autoRestoreGroupEnabled && !device.desiredGroupPreset) {
+                ws.send(JSON.stringify({ type: 'error', message: 'Save a desired configuration before enabling automatic restore.' }));
+              } else {
+                setDevice(uuid, { autoRestoreGroupEnabled: Boolean(autoRestoreGroupEnabled) });
+              }
             }
             saveHistoricalDevices();
             broadcastUpdate(wss, discovery);
