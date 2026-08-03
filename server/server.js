@@ -62,6 +62,18 @@ app.use('/spotify', spotifyAuthRoutes);
 app.use(bodyParser.json());
 app.use('/', sonosRoutes(discovery));
 
+// Serve the built frontend (frontController/dist) so the whole app runs as a
+// single process/port. Falls back to index.html for client-side routes
+// (e.g. /devices, /spotifyWeekList) on direct load/refresh.
+const frontendDistPath = path.join(__dirname, '../frontController/dist');
+app.use(express.static(frontendDistPath));
+app.use((req, res, next) => {
+  if (req.method !== 'GET' || req.path.startsWith('/api') || req.path.startsWith('/spotify')) {
+    return next();
+  }
+  res.sendFile(path.join(frontendDistPath, 'index.html'));
+});
+
 setupWebSocket(wss, discovery);
 
 // Listen to discovery events
@@ -129,7 +141,7 @@ const refreshTokenIfneeded = async () => {
 
 refreshTokenIfneeded(); // Refresh token on server startup
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => logger.info(`Server running on http://127.0.0.1:${PORT}`));
 console.log(`Server running on http://127.0.0.1:${PORT}`);
 
