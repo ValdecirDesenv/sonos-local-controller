@@ -26,3 +26,8 @@ build
 *.env
 .env
 spotifyToken.json
+
+# Per-machine lockfile churn / live runtime state, not meaningful history
+server/package-lock.json
+frontController/package-lock.json
+server/data/default.json
